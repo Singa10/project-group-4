@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Welcome to BookStore - Your premier destination for Software Engineering books"
+    />
+    <title>Software Engineering BookStore</title>
+    <link rel="stylesheet" href="css/style.css" />
+  
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="toast-container"></div>
+
+    <div class="modal">
+      <div class="modal-content">
+        <button class="close-modal">
+          <i class="fas fa-times"></i>
+        </button>
+        <div class="modal-body">
+        </div>
+      </div>
+    </div>
+    <header class="main-header">
+      <nav class="nav-container">
+        <div class="logo">
+          <i class="fas fa-book-reader"></i>
+          <span>TechBooks</span>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html" class="active"
+              ><i class="fas fa-home"></i> Home</a
+            >
+          </li>
+          <li>
+            <a href="shop.html"><i class="fas fa-shopping-bag"></i> Shop</a>
+          </li>
+          <li>
+            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+          </li>
+          <li>
+            <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+          </li>
+          <li>
+            <a href="login.html" class="login-btn"
+              ><i class="fas fa-user"></i> Login</a
+            >
+          </li>
+        </ul>
+
+        <div class="header-actions">
+          <div class="cart-wrapper">
+            <button class="cart-icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="cart-count">0</span>
+            </button>
+
+            <div class="cart-dropdown">
+              <div class="cart-header">
+                <h3>Shopping Cart</h3>
+                <button class="close-cart">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div class="cart-items">
+              </div>
+              <div class="cart-empty">Your cart is empty</div>
+              <div class="cart-footer">
+                <div class="cart-total">
+                  <span>Total:</span>
+                  <span class="total-amount">$0.00</span>
+                </div>
+                <button class="checkout-btn">Checkout</button>
+              </div>
+            </div>
+          </div>
+          <button class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+        <div class="hero-content">
+          <h1 class="animate-text">Discover the World of Programming</h1>
+          <p class="hero-subtitle">
+            Your Journey to Software Engineering Excellence Starts Here
+          </p>
+          <div class="hero-buttons">
+            <a href="#featured" class="primary-btn">Explore Books</a>
+            <a href="#newsletter" class="secondary-btn">Subscribe</a>
+          </div>
+        </div>
+      </section>
+      <section class="multimedia-section">
+        <div class="section-header">
+          <h2>Featured Tutorial</h2>
+          <p>Essential Programming Book Recommendations</p>
+        </div>
+
+        <div class="video-container">
+          <iframe
+            width="100%"
+            height="100%"
+            src="https://www.youtube.com/embed/zGw_xKF47T0"
+            title="Programming Books Collection Every Software Engineer Should Read"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          >
+          </iframe>
+        </div>
+
+        <div class="section-header">
+          <h2>Audio Book Samples</h2>
+          <p>Listen to excerpts from top programming books</p>
+        </div>
+
+        <div class="audio-container">
+          <div class="audio-player">
+            <img
+              src="https://m.media-amazon.com/images/I/41xShlnTZTL._SX376_BO1,204,203,200_.jpg"
+              alt="Clean Code Book Cover"
+              class="audio-cover"
+            />
+            <div class="audio-info">
+              <h3>Clean Code: Chapter 1 - Clean Code</h3>
+              <p>By Robert C. Martin</p>
+              <audio id="audio-player-1" controls>
+                <source
+                  src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+                  type="audio/mpeg"
+                />
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          </div>
+          <div class="audio-player">
+            <img
+              src="https://i1.wp.com/springframework.guru/wp-content/uploads/2015/04/9780201633610.jpg?resize=520%2C648"
+              alt="Design Patterns Book Cover"
+              class="audio-cover"
+            />
+            <div class="audio-info">
+              <h3>Design Patterns: Elements of Reusable Software</h3>
+              <p>By Gang of Four</p>
+              <audio id="audio-player-2" controls>
+                <source
+                  src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+                  type="audio/mpeg"
+                />
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="featured" class="featured-books">
+        <div class="section-header">
+          <h2>Featured Books</h2>
+          <p>Handpicked selections for software engineers</p>
+        </div>
+        <div class="books-grid">
+          <div class="book-card">
+            <div class="book-badge">Bestseller</div>
+            <div class="book-image">
+              <img
+                src="https://elpythonista.com/wp-content/uploads/2020/10/Clean_Code-portada.jpg"
+                alt="Clean Code"
+              />
+              <div class="book-overlay">
+                <button class="quick-view">Quick View</button>
+              </div>
+            </div>
+            <div class="book-info">
+              <div class="book-category">Software Craftsmanship</div>
+              <h3>Clean Code</h3>
+              <p class="author">By Robert C. Martin</p>
+              <div class="book-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <span>(4.8)</span>
+              </div>
+              <p class="price">$44.99</p>
+              <button class="add-to-cart">
+                <i class="fas fa-shopping-cart"></i> Add to Cart
+              </button>
+            </div>
+          </div>
+          <div class="book-card">
+            <div class="book-badge">Classic</div>
+            <div class="book-image">
+              <img
+                src="https://i1.wp.com/springframework.guru/wp-content/uploads/2015/04/9780201633610.jpg"
+                alt="Design Patterns"
+              />
+              <div class="book-overlay">
+                <button class="quick-view">Quick View</button>
+              </div>
+            </div>
+            <div class="book-info">
+              <div class="book-category">Software Design</div>
+              <h3>Design Patterns</h3>
+              <p class="author">By Gang of Four</p>
+              <div class="book-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span>(4.9)</span>
+              </div>
+              <p class="price">$54.99</p>
+              <button class="add-to-cart">
+                <i class="fas fa-shopping-cart"></i> Add to Cart
+              </button>
+            </div>
+          </div>
+          <div class="book-card">
+            <div class="book-badge">Must Read</div>
+            <div class="book-image">
+              <img
+                src="https://th.bing.com/th/id/OIP.qj6BQ0g14hMcS78qxOl9iwHaJp"
+                alt="The Pragmatic Programmer"
+              />
+              <div class="book-overlay">
+                <button class="quick-view">Quick View</button>
+              </div>
+            </div>
+            <div class="book-info">
+              <div class="book-category">Software Development</div>
+              <h3>The Pragmatic Programmer</h3>
+              <p class="author">By Dave Thomas & Andy Hunt</p>
+              <div class="book-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span>(4.9)</span>
+              </div>
+              <p class="price">$49.99</p>
+              <button class="add-to-cart">
+                <i class="fas fa-shopping-cart"></i> Add to Cart
+              </button>
+            </div>
+          </div>
+          <div class="book-card">
+            <div class="book-badge">Comprehensive</div>
+            <div class="book-image">
+              <img
+                src="https://images-na.ssl-images-amazon.com/images/I/41JOmGowq-L._SX408_BO1,204,203,200_.jpg"
+                alt="Code Complete"
+              />
+              <div class="book-overlay">
+                <button class="quick-view">Quick View</button>
+              </div>
+            </div>
+            <div class="book-info">
+              <div class="book-category">Software Construction</div>
+              <h3>Code Complete</h3>
+              <p class="author">By Steve McConnell</p>
+              <div class="book-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <span>(4.7)</span>
+              </div>
+              <p class="price">$47.99</p>
+              <button class="add-to-cart">
+                <i class="fas fa-shopping-cart"></i> Add to Cart
+              </button>
+            </div>
+          </div>
+          <div class="book-card">
+            <div class="book-badge">Essential</div>
+            <div class="book-image">
+              <img
+                src="https://images-na.ssl-images-amazon.com/images/I/41LBzpPXCOL._SX379_BO1,204,203,200_.jpg"
+                alt="Refactoring"
+              />
+              <div class="book-overlay">
+                <button class="quick-view">Quick View</button>
+              </div>
+            </div>
+            <div class="book-info">
+              <div class="book-category">Code Improvement</div>
+              <h3>Refactoring</h3>
+              <p class="author">By Martin Fowler</p>
+              <div class="book-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <span>(4.8)</span>
+              </div>
+              <p class="price">$46.99</p>
+              <button class="add-to-cart">
+                <i class="fas fa-shopping-cart"></i> Add to Cart
+              </button>
+            </div>
+          </div>
+          <div class="book-card">
+            <div class="book-badge">Beginner Friendly</div>
+            <div class="book-image">
+              <img
+                src="https://images-na.ssl-images-amazon.com/images/I/61APhXCksuL._SX430_BO1,204,203,200_.jpg"
+                alt="Head First Design Patterns"
+              />
+              <div class="book-overlay">
+                <button class="quick-view">Quick View</button>
+              </div>
+            </div>
+            <div class="book-info">
+              <div class="book-category">Design Patterns</div>
+              <h3>Head First Design Patterns</h3>
+              <p class="author">By Eric Freeman & Elisabeth Robson</p>
+              <div class="book-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+                <span>(4.7)</span>
+              </div>
+              <p class="price">$45.99</p>
+              <button class="add-to-cart">
+                <i class="fas fa-shopping-cart"></i> Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="newsletter" class="newsletter">
+        <div class="newsletter-content">
+          <i class="fas fa-envelope-open-text newsletter-icon"></i>
+          <h2>Stay Updated</h2>
+          <p>Get notified about new releases and exclusive deals</p>
+          <form id="newsletter-form" class="newsletter-form">
+            <div class="input-group">
+              <i class="fas fa-envelope"></i>
+              <input type="email" placeholder="Enter your email" required />
+            </div>
+            <button type="submit">
+              <span>Subscribe</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+    <footer class="main-footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About Us</h3>
+          <p>
+            Your trusted source for programming and software engineering books.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Connect With Us</h3>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 TechBooks | All Rights Reserved</p>
+      </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

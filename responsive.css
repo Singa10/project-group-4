@@ -1,0 +1,54 @@
+
+@media screen and (max-width: 768px) {
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: var(--primary-color);
+      padding: 1rem;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+  
+    .nav-links.active {
+      display: flex;
+    }
+  
+    .mobile-menu {
+      display: block;
+    }
+  
+    .hero-content h2 {
+      font-size: 2rem;
+    }
+  
+    .newsletter-form {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .newsletter-form input[type="email"] {
+      max-width: 100%;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .logo h1 {
+      font-size: 1.2rem;
+    }
+  
+    .hero-content {
+      padding: 1rem;
+    }
+  
+    .featured-books {
+      padding: 3rem 1rem;
+    }
+  
+    .books-grid {
+      grid-template-columns: 1fr;
+    }
+  }
