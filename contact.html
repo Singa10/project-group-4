@@ -1,0 +1,248 @@
+<!-- contact.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - TechBooks</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/contact.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="main-header">
+      <nav class="nav-container">
+        <div class="logo">
+          <i class="fas fa-book-reader"></i>
+          <span>TechBooks</span>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html" 
+              ><i class="fas fa-home"></i> Home</a
+            >
+          </li>
+          <li>
+            <a href="shop.html" ><i class="fas fa-shopping-bag"></i> Shop</a>
+          </li>
+          <li>
+            <a href="about.html" ><i class="fas fa-info-circle"></i> About</a>
+          </li>
+          <li>
+            <a href="contact.html"class="active"><i class="fas fa-envelope"></i> Contact</a>
+          </li>
+          <li>
+            <a href="login.html" class="login-btn"
+              ><i class="fas fa-user"></i> Login</a
+            >
+          </li>
+        </ul>
+        <div class="header-actions">
+          <div class="cart-wrapper">
+            <button class="cart-icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="cart-count">0</span>
+            </button>
+            <div class="cart-dropdown">
+              <div class="cart-header">
+                <h3>Shopping Cart</h3>
+                <button class="close-cart">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div class="cart-items">
+              </div>
+              <div class="cart-empty">Your cart is empty</div>
+              <div class="cart-footer">
+                <div class="cart-total">
+                  <span>Total:</span>
+                  <span class="total-amount">$0.00</span>
+                </div>
+                <button class="checkout-btn">Checkout</button>
+              </div>
+            </div>
+          </div>
+          <button class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Contact Hero Section -->
+      <section class="contact-hero">
+        <div class="contact-hero-content">
+          <h1>Get in Touch</h1>
+          <p class="subtitle">We'd love to hear from you</p>
+        </div>
+      </section>
+
+      <!-- Contact Information Section -->
+      <section class="contact-info-section">
+        <div class="container">
+          <div class="contact-grid">
+            <div class="contact-info">
+              <div class="info-card">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Visit Us</h3>
+                <p>Megenanga</p>
+                <p>Metbaber builiding, 305A</p>
+              </div>
+              <div class="info-card">
+                <i class="fas fa-phone"></i>
+                <h3>Call Us</h3>
+                <p>+25191234567</p>
+                <p>Mon-Fri, 9:00 AM - 6:00 PM</p>
+              </div>
+              <div class="info-card">
+                <i class="fas fa-envelope"></i>
+                <h3>Email Us</h3>
+                <p>support@techbooks.com</p>
+                <p>sales@techbooks.com</p>
+              </div>
+              <div class="info-card">
+                <i class="fas fa-comments"></i>
+                <h3>Live Chat</h3>
+                <p>Available 24/7</p>
+                <button class="chat-btn">Start Chat</button>
+              </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form-container">
+              <h2>Send us a Message</h2>
+              <form id="contact-form" class="contact-form">
+                <div class="form-group">
+                  <label for="name">Full Name</label>
+                  <input type="text" id="name" name="name" required />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input type="email" id="email" name="email" required />
+                </div>
+                <div class="form-group">
+                  <label for="subject">Subject</label>
+                  <input type="text" id="subject" name="subject" required />
+                </div>
+                <div class="form-group">
+                  <label for="message">Message</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="6"
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" class="submit-btn">
+                  <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <div class="container">
+          <h2>Frequently Asked Questions</h2>
+          <div class="faq-grid">
+            <div class="faq-item">
+              <div class="faq-question">
+                <h3>How can I track my order?</h3>
+                <i class="fas fa-chevron-down"></i>
+              </div>
+              <div class="faq-answer">
+                <p>
+                  You can track your order by logging into your account and
+                  visiting the "Orders" section, or by using the tracking number
+                  provided in your shipping confirmation email.
+                </p>
+              </div>
+            </div>
+            <!-- Add more FAQ items -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Newsletter Section (Same as home page) -->
+      <section class="newsletter">
+        <div class="newsletter-content">
+          <i class="fas fa-envelope-open-text newsletter-icon"></i>
+          <h2>Stay Updated</h2>
+          <p>Get notified about new releases and exclusive deals</p>
+          <form id="newsletter-form" class="newsletter-form">
+            <div class="input-group">
+              <i class="fas fa-envelope"></i>
+              <input type="email" placeholder="Enter your email" required />
+            </div>
+            <button type="submit">
+              <span>Subscribe</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer (Same as home page) -->
+    <footer class="main-footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About Us</h3>
+          <p>
+            Your trusted source for programming and software engineering books.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Connect With Us</h3>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 TechBooks | All Rights Reserved</p>
+      </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget" id="chat-widget">
+      <div class="chat-header">
+        <h3>Live Chat</h3>
+        <button class="close-chat"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="chat-messages">
+        <div class="message system">
+          Welcome to TechBooks support! How can we help you today?
+        </div>
+      </div>
+      <div class="chat-input">
+        <input type="text" placeholder="Type your message..." />
+        <button><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+
+    <script src="js/contact.js"></script>
+  </body>
+</html>
