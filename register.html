@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create account — Project</title>
-    <!-- Link to external stylesheet -->
+    
     <link rel="stylesheet" href="auth.css">
      <link rel="stylesheet" href="style.css" />
 </head>
@@ -71,59 +71,59 @@
       </nav>
     </header>
   
-    <!-- Main registration form container -->
+   
     <main class="auth-page">
         <div class="auth-card">
             <h1>Create account</h1>
 
-            <!-- Registration form with JS validation -->
+            
             <form id="registerForm" novalidate>
-                <!-- Full Name input -->
+                
                 <div class="form-group">
                     <label for="fullName">Full Name</label>
                     <input type="text" id="fullName" name="fullName" required>
                 </div>
 
-                <!-- Email input -->
+               
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" required>
                 </div>
 
-                <!-- Password input -->
+                
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" minlength="6" required>
                     <small>Minimum 6 characters</small>
                 </div>
 
-                <!-- Confirm Password input -->
+                
                 <div class="form-group">
                     <label for="confirmPassword">Confirm Password</label>
                     <input type="password" id="confirmPassword" name="confirmPassword" required>
                 </div>
 
-                <!-- Terms and conditions checkbox -->
+                
                 <div class="form-group checkbox-group">
                     <input type="checkbox" id="terms" name="terms" required>
                     <label for="terms">I agree to the terms</label>
                 </div>
 
-                <!-- Error message area -->
+                
                 <div id="registerError" aria-live="polite" class="error-message"></div>
 
-                <!-- Submit button -->
+                
                 <button type="submit" class="btn">Register</button>
             </form>
 
-            <!-- Link to login page -->
+            
             <p class="small-link">
                 <a href="login.html">Already have an account? Sign in</a>
             </p>
         </div>
     </main>
 
-    <!-- Link to external JS -->
+   
     <script src="auth.js"></script>
 </body>
 </html>
