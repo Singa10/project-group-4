@@ -1,7 +1,7 @@
 # Library Management System Website
 
 ## Project Description
-This is a multi-page website for a Library Management System, built collaboratively by the team. Each section represents a key part of the system, including user access (login/register), administration, shop, and informational pages, designed to provide a seamless and responsive experience for users.
+This is a multi-page website for a book store, built collaboratively by the team. Each section represents a key part of the system, including user access (login/register), administration, shop, and informational pages, designed to provide a seamless and responsive experience for users.
 
 ## Team Members & Responsibilities
 
