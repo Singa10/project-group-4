@@ -252,3 +252,21 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Position navigation arrows inside the team section */
+.team-section .swiper-button-next,
+.team-section .swiper-button-prev {
+  color: #333;              /* arrow color */
+  top: 50%;                 /* vertically center relative to slider */
+  transform: translateY(-50%);
+}
+
+/* Optional: adjust horizontal placement */
+.team-section .swiper-button-next {
+  right: 10px;              /* move closer to the slider */
+}
+
+.team-section .swiper-button-prev {
+  left: 10px;               /* move closer to the slider */
+}
+

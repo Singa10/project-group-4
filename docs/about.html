@@ -19,6 +19,9 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
   </head>
   <body>
     <header class="main-header">
@@ -91,20 +94,25 @@
       <section class="about-hero">
         <div class="about-hero-content">
           <h1>Our Story</h1>
-          <p class="subtitle">Empowering Developers </p>
+          <p class="subtitle">Empowering Readers </p>
         </div>
       </section>
 
-      <section class="mission-section">
+  <section class="mission-section">
         <div class="container">
           <div class="mission-grid">
             <div class="mission-content">
               <h2>Our Mission</h2>
               <p>
-                At TechBooks, we believe in making quality programming education
-                accessible to everyone. Our carefully curated collection of
-                technical books serves as a bridge between aspiring developers
-                and industry experts.
+                At TechBooks, our mission is to make knowledge,
+                 creativity, and inspiration accessible to everyone. 
+                 We believe books are more than pages — they are gateways to new skills,
+                  fresh perspectives, and timeless stories. 
+                  From empowering developers with cutting‑edge programming guides to 
+                  enriching lives through fiction, non‑fiction, and psychology,
+                   we curate a diverse collection that fuels curiosity and growth. 
+                   Our goal is to connect readers with the right book at the right time, 
+                   fostering a community where learning and imagination thrive.
               </p>
               
             </div>
@@ -120,24 +128,92 @@
       <section class="team-section">
         <div class="container">
           <h2>Meet Our Team</h2>
-          <div class="team-grid">
-            <div class="team-member">
-              <div class="member-image">
-                <img
-                  src="https://randomuser.me/api/portraits/men/1.jpg"
-                  alt="John Doe"
-                />
+      
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <!-- Member 1 -->
+              <div class="swiper-slide">
+                <div class="team-member">
+                  <div class="member-image">
+                    <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Kebede Abebe" />
+                  </div>
+                  <h3>Kebede Abebe</h3>
+                  <p class="position">Founder & CEO</p>
+                  <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                  </div>
+                </div>
               </div>
-              <h3>kebede abebe</h3>
-              <p class="position">Founder & CEO</p>
-              <div class="social-links">
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
+      
+              <!-- Member 2 -->
+              <div class="swiper-slide">
+                <div class="team-member">
+                  <div class="member-image">
+                    <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="Sara Tesfaye" />
+                  </div>
+                  <h3>Sara Tesfaye</h3>
+                  <p class="position">CTO</p>
+                  <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                  </div>
+                </div>
+              </div>
+      
+              <!-- Member 3 -->
+              <div class="swiper-slide">
+                <div class="team-member">
+                  <div class="member-image">
+                    <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="Michael Alemu" />
+                  </div>
+                  <h3>Michael Alemu</h3>
+                  <p class="position">Lead Designer</p>
+                  <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                  </div>
+                </div>
+              </div>
+      
+              <!-- Member 4 -->
+              <div class="swiper-slide">
+                <div class="team-member">
+                  <div class="member-image">
+                    <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="Hana Bekele" />
+                  </div>
+                  <h3>Hana Bekele</h3>
+                  <p class="position">Marketing Manager</p>
+                  <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                  </div>
+                </div>
+              </div>
+      
+              <!-- Member 5 -->
+              <div class="swiper-slide">
+                <div class="team-member">
+                  <div class="member-image">
+                    <img src="https://randomuser.me/api/portraits/men/5.jpg" alt="Samuel Tadesse" />
+                  </div>
+                  <h3>Samuel Tadesse</h3>
+                  <p class="position">Sales Director</p>
+                  <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                  </div>
+                </div>
               </div>
             </div>
+      
+            <!-- Navigation buttons -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
           </div>
         </div>
       </section>
+      
       <section class="values-section">
         <div class="container">
           <h2>Our Core Values</h2>
@@ -184,7 +260,7 @@
             </div>
           </div>
         </div>
-      </section>
+  </section>
 
       <section id="newsletter" class="newsletter">
         <div class="newsletter-content">

@@ -354,8 +354,7 @@ class ShopManager {
   image: "/images/JavaScript_ The Modern Parts.jfif",
   description: "A concise guide highlighting the most effective features of JavaScript.",
   inStock: true,
-}
-
+},
 {
   id: 26,
   title: "Don't Make Me Think, Revisited",
@@ -376,7 +375,7 @@ class ShopManager {
   rating: 4.7,
   reviews: 2800,
   category: "web-development",
-  image: "/images/learning-web-design.jpg",
+  image: "/images/Learning Web Design_ A Beginner's Guide to HTML… (1).jfif",
   description: "Comprehensive introduction to HTML, CSS, JavaScript, and web graphics.",
   inStock: true,
 },
