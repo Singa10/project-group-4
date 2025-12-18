@@ -81,7 +81,7 @@ class ShopManager {
           id: 4,
           title: "Code Complete",
           author: "Steve McConnell",
-          price: 47.99,
+          price: 19.99,
           rating: 4.7,
           reviews: 1120,
           category: "software-construction",
@@ -124,7 +124,7 @@ class ShopManager {
           rating: 4.6,
           reviews: 700,
           category: "javascript",
-          image: "",
+          image: "/images/you don know js book series.jfif",
           description: "A deep dive into the core mechanisms of JavaScript",
           inStock: true,
         },
@@ -194,6 +194,194 @@ class ShopManager {
           description: "A treasure trove of practical programming techniques",
           inStock: true,
         },
+        {
+          id: 13,
+          title: "To kill a Mockingbird",
+          author: "harper Lee",
+          price: 44.99,
+          rating: 4.8,
+          reviews: 650,
+          category: "fiction",
+          image:
+            "/images/to kill a mokingbird.jfif",
+          description:
+            "Comprehensive introduction to the modern study of computer algorithms",
+          inStock: true,
+        },
+        
+{
+  id: 14,
+  title: "1984",
+  author: "George Orwell",
+  price: 29.99,
+  rating: 4.7,
+  reviews: 1200,
+  category: "fiction",
+  image: "/images/George Orwell BBC Arena Documentary, 1984_ this….jfif",
+  description: "A dystopian novel exploring surveillance, control, and truth.",
+  inStock: true,
+},
+{
+  id: 15,
+  title: "Pride and Prejudice",
+  author: "Jane Austen",
+  price: 24.99,
+  rating: 4.6,
+  reviews: 950,
+  category: "fiction",
+  image: "/images/The image depicts a classic book cover for Jane… (2).jfif",
+  description: "A classic romance novel about love, class, and society.",
+  inStock: true,
+},
+{
+  id: 16,
+  title: "The Great Gatsby",
+  author: "F. Scott Fitzgerald",
+  price: 27.99,
+  rating: 4.5,
+  reviews: 870,
+  category: "fiction",
+  image: "/images/Vintage Book Cover Print _The Great Gatsby_ - F….jfif",
+  description: "A story of wealth, love, and the American dream.",
+  inStock: true,
+},
+
+{
+  id: 17,
+  title: "Sapiens: A Brief History of Humankind",
+  author: "Yuval Noah Harari",
+  price: 39.99,
+  rating: 4.8,
+  reviews: 2100,
+  category: "non-fiction",
+  image: "/images/From a renowned historian comes a groundbreaking… (1).jfif",
+  description: "Explores the history and impact of Homo sapiens.",
+  inStock: true,
+},
+{
+  id: 18,
+  title: "Educated",
+  author: "Tara Westover",
+  price: 34.99,
+  rating: 4.7,
+  reviews: 1600,
+  category: "non-fiction",
+  image: "/images/Educated by Tara Westover on Apple Books (1).jfif",
+  description: "A memoir about resilience, family, and the pursuit of education.",
+  inStock: true,
+},
+{
+  id: 19,
+  title: "Becoming",
+  author: "Michelle Obama",
+  price: 36.99,
+  rating: 4.9,
+  reviews: 2500,
+  category: "non-fiction",
+  image: "/images/Becoming - Michelle Obama.jfif",
+  description: "The inspiring memoir of the former First Lady of the United States.",
+  inStock: true,
+},
+
+{
+  id: 20,
+  title: "Thinking, Fast and Slow",
+  author: "Daniel Kahneman",
+  price: 42.99,
+  rating: 4.8,
+  reviews: 3000,
+  category: "psychology",
+  image: "/images/download (1).jfif",
+  description: "Examines two modes of thought: fast, intuitive and slow, deliberate.",
+  inStock: true,
+},
+{
+  id: 21,
+  title: "Man's Search for Meaning",
+  author: "Viktor E. Frankl",
+  price:19.99,
+  rating: 4.9,
+  reviews: 2800,
+  category: "psychology",
+  image: "/images/Man's search for meaning_.jfif",
+  description: "A psychiatrist’s reflections on life in Nazi camps and finding meaning.",
+  inStock: true,
+},
+{
+  id: 22,
+  title: "The Power of Habit",
+  author: "Charles Duhigg",
+  price: 33.99,
+  rating: 4.6,
+  reviews: 1900,
+  category: "psychology",
+  image: "/images/The Power of Habit_ A Book Review.jfif",
+  description: "Explores how habits are formed and how they can be changed.",
+  inStock: true,
+},
+{
+  id: 23,
+  title: "Influence: The Psychology of Persuasion",
+  author: "Robert B. Cialdini",
+  price: 15.99,
+  rating: 4.7,
+  reviews: 2200,
+  category: "psychology",
+  image: "/images/_Influence_ By Robert Cialdini  This book was….jfif",
+  description: "A classic book on persuasion and human behavior.",
+  inStock: true,
+},
+{
+  id: 24,
+  title: "HTML & CSS: Design and Build Websites",
+  author: "Jon Duckett",
+  price: 15.99,
+  rating: 4.7,
+  reviews: 3200,
+  category: "web-development",
+  image: "/images/abed8b64-1afd-4fc4-bdc2-6f0fa1385941.jfif",
+  description: "Beginner-friendly guide to HTML and CSS with visual examples.",
+  inStock: true,
+},
+{
+  id: 25,
+  title: "JavaScript: The Good Parts",
+  author: "Douglas Crockford",
+  price: 109.99,
+  rating: 4.6,
+  reviews: 2800,
+  category: "web-development",
+  image: "/images/JavaScript_ The Modern Parts.jfif",
+  description: "A concise guide highlighting the most effective features of JavaScript.",
+  inStock: true,
+}
+
+{
+  id: 26,
+  title: "Don't Make Me Think, Revisited",
+  author: "Steve Krug",
+  price: 102.99,
+  rating: 4.9,
+  reviews: 5000,
+  category: "web-development",
+  image: "/images/Great book on user experience_ Don't make me….jfif",
+  description: "Classic usability guide for intuitive web design.",
+  inStock: true,
+},
+{
+  id: 27,
+  title: "Learning Web Design (5th Edition)",
+  author: "Jennifer Niederst Robbins",
+  price: 119.99,
+  rating: 4.7,
+  reviews: 2800,
+  category: "web-development",
+  image: "/images/learning-web-design.jpg",
+  description: "Comprehensive introduction to HTML, CSS, JavaScript, and web graphics.",
+  inStock: true,
+},
+
+
       ];
   
       this.setupEventListeners();
@@ -239,16 +427,24 @@ class ShopManager {
   
     applyFilters() {
       this.filteredProducts = this.products.filter((product) => {
-        // Category filter
+      
         if (this.filters.category && product.category !== this.filters.category)
           return false;
   
-        // Price filter
-        if (this.filters.price) {
-          const [min, max] = this.filters.price.split("-").map(Number);
-          if (max && (product.price < min || product.price > max)) return false;
-          if (!max && product.price < min) return false;
-        }
+        
+          
+if (this.filters.price) {
+  if (this.filters.price.includes("+")) {
+    
+    const min = parseFloat(this.filters.price);
+    if (product.price < min) return false;
+  } else {
+   
+    const [min, max] = this.filters.price.split("-").map(Number);
+    if (product.price < min || product.price > max) return false;
+  }
+}
+
   
         // Rating filter
         if (this.filters.rating && product.rating < Number(this.filters.rating))

@@ -415,7 +415,6 @@ body {
     transition-delay: 1.2s;
 }
 
-/* Mobile Responsive Styles */
 @media (max-width: 768px) {
     body {
         padding: 10px;
