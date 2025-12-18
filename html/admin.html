@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - TechBooks</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <header class="main-header">
+      <nav class="nav-container">
+        <button class="mobile-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="logo">
+          <i class="fas fa-book-reader"></i>
+          <span>TechBooks Admin</span>
+        </div>
+        <div class="admin-nav-right">
+          <div class="admin-notifications">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge">3</span>
+            <div class="notification-dropdown">
+              <div class="notification-item">
+                <p>New order #1234 received</p>
+                <span>2 minutes ago</span>
+              </div>
+              <div class="notification-item">
+                <p>Low stock alert: Clean Code</p>
+                <span>1 hour ago</span>
+              </div>
+              <div class="notification-item">
+                <p>New user registration</p>
+                <span>3 hours ago</span>
+              </div>
+            </div>
+          </div>
+          <div class="admin-profile">
+            <img src="images/admin-avatar.jpg" alt="Admin" />
+            <span>John Doe</span>
+            <div class="profile-dropdown">
+              <a href="admin-profile.html"
+                ><i class="fas fa-user"></i> Profile</a
+              >
+              <a href="admin-settings.html"
+                ><i class="fas fa-cog"></i> Settings</a
+              >
+              <a href="login.html"
+                ><i class="fas fa-sign-out-alt"></i> Logout</a
+              >
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <div class="admin-container">
+      <aside class="admin-sidebar">
+        <div class="admin-menu">
+          <ul>
+            <li class="active">
+              <a href="admin-dashboard.html">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="admin-orders.html">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Orders</span>
+              </a>
+            </li>
+            <li>
+              <a href="admin-users.html">
+                <i class="fas fa-users"></i>
+                <span>Users</span>
+              </a>
+            </li>
+            <li>
+              <a href="admin-books.html">
+                <i class="fas fa-book"></i>
+                <span>Books</span>
+              </a>
+            </li>
+            <li>
+              <a href="admin-categories.html">
+                <i class="fas fa-tags"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+            <li>
+              <a href="admin-reports.html">
+                <i class="fas fa-chart-bar"></i>
+                <span>Reports</span>
+              </a>
+            </li>
+            <li>
+              <a href="admin-settings.html">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+      <main class="admin-main">
+        <div class="welcome-section">
+          <h1>Welcome Back, John!</h1>
+          <p>Here's what's happening with your store today.</p>
+        </div>
+        <div class="dashboard-stats">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-shopping-cart"></i>
+            </div>
+            <div class="stat-details">
+              <h3>Total Orders</h3>
+              <p class="stat-number">1,234</p>
+              <span class="stat-change positive">
+                <i class="fas fa-arrow-up"></i> 12.5%
+              </span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-details">
+              <h3>Total Users</h3>
+              <p class="stat-number">5,678</p>
+              <span class="stat-change positive">
+                <i class="fas fa-arrow-up"></i> 8.3%
+              </span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-dollar-sign"></i>
+            </div>
+            <div class="stat-details">
+              <h3>Revenue</h3>
+              <p class="stat-number">$12,345</p>
+              <span class="stat-change positive">
+                <i class="fas fa-arrow-up"></i> 15.7%
+              </span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-book"></i>
+            </div>
+            <div class="stat-details">
+              <h3>Total Books</h3>
+              <p class="stat-number">789</p>
+              <span class="stat-change positive">
+                <i class="fas fa-arrow-up"></i> 5.2%
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="dashboard-charts">
+          <div class="chart-container">
+            <h2>Sales Overview</h2>
+            <canvas id="salesChart"></canvas>
+          </div>
+          <div class="chart-container">
+            <h2>Top Categories</h2>
+            <canvas id="categoriesChart"></canvas>
+          </div>
+        </div>
+        <div class="recent-orders">
+          <div class="table-header">
+            <h2>Recent Orders</h2>
+            <a href="admin-orders.html" class="view-all-btn">View All</a>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Product</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#ORD-001</td>
+                  <td>John Smith</td>
+                  <td>Clean Code</td>
+                  <td>$49.99</td>
+                  <td>
+                    <span class="status-badge status-pending">Pending</span>
+                  </td>
+                  <td>
+                    <div class="action-btns">
+                      <button class="action-btn" title="View">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="action-btn" title="Edit">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="/js/admin.js"></script>
+  </body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup Form</title>
+    <link rel="stylesheet" href="/css//auth.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+</head>
+
+<body>
+  <header class="main-header">
+    <nav class="nav-container">
+      <div class="logo">
+        <i class="fas fa-book-reader"></i>
+        <span>TechBooks</span>
+      </div>
+      <ul class="nav-links">
+        <li>
+          <a href="index.html" class="active"
+            ><i class="fas fa-home"></i> Home</a
+          >
+        </li>
+        <li>
+          <a href="shop.html"><i class="fas fa-shopping-bag"></i> Shop</a>
+        </li>
+        <li>
+          <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+        </li>
+        <li>
+          <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+        </li>
+        <li>
+          <a href="login.html" class="login-btn"
+            ><i class="fas fa-user"></i> Login</a
+          >
+        </li>
+      </ul>
+
+      <div class="header-actions">
+        <div class="cart-wrapper">
+          <button class="cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+          </button>
+
+          <div class="cart-dropdown">
+            <div class="cart-header">
+              <h3>Shopping Cart</h3>
+              <button class="close-cart">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="cart-items">
+            </div>
+            <div class="cart-empty">Your cart is empty</div>
+            <div class="cart-footer">
+              <div class="cart-total">
+                <span>Total:</span>
+                <span class="total-amount">$0.00</span>
+              </div>
+              <button class="checkout-btn">Checkout</button>
+            </div>
+          </div>
+        </div>
+        <button class="mobile-menu-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+
+    <div class="auth-wrapper">
+        <div class="background-shape"></div>
+        <div class="secondary-shape"></div>
+        <div class="credentials-panel signin">
+            <h2 class="slide-element">Login</h2>
+            <form action="#">
+                <div class="field-wrapper slide-element">
+                    <input type="text" required>
+                    <label for="">Username</label>
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div class="field-wrapper slide-element">
+                    <input type="password" required>
+                    <label for="">Password</label>
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+
+                <div class="field-wrapper slide-element">
+                    <button class="submit-button" type="submit">Login</button>
+                </div>
+
+                <div class="switch-link slide-element">
+                    <p>Don't have an account? <br> <a href="#" class="register-trigger">Sign Up</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="welcome-section signin">
+            <h2 class="slide-element">WELCOME BACK!</h2>
+        </div>
+
+        <div class="credentials-panel signup">
+            <h2 class="slide-element">Register</h2>
+            <form action="#">
+                <div class="field-wrapper slide-element">
+                    <input type="text" required>
+                    <label for="">Username</label>
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div class="field-wrapper slide-element">
+                    <input type="email" required>
+                    <label for="">Email</label>
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+
+                <div class="field-wrapper slide-element">
+                    <input type="password" required>
+                    <label for="">Password</label>
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+
+                <div class="field-wrapper slide-element">
+                    <button class="submit-button" type="submit">Register</button>
+                </div>
+
+                <div class="switch-link slide-element">
+                    <p>Already have an account? <br> <a href="#" class="login-trigger">Sign In</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="welcome-section signup">
+            <h2 class="slide-element">WELCOME!</h2>
+        </div>
+
+
+    </div>
+    <script src="/js/auth.js"></script>
+</body>
+
+</html>

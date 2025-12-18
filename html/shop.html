@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop - TechBooks</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/shop.css" />
+  </head>
+  <body>
+     <header class="main-header">
+      <nav class="nav-container">
+        <div class="logo">
+          <i class="fas fa-book-reader"></i>
+          <span>TechBooks</span>
+        </div>
+        <ul class="nav-links">
+          <li>
+            <a href="index.html" 
+              ><i class="fas fa-home"></i> Home</a
+            >
+          </li>
+          <li>
+            <a href="shop.html" class="active"><i class="fas fa-shopping-bag"></i> Shop</a>
+          </li>
+          <li>
+            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+          </li>
+          <li>
+            <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+          </li>
+          <li>
+            <a href="login.html" class="login-btn"
+              ><i class="fas fa-user"></i> Login</a
+            >
+          </li>
+        </ul>
+        <div class="header-actions">
+          <div class="cart-wrapper">
+            <button class="cart-icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="cart-count">0</span>
+            </button>
+
+            <div class="cart-dropdown">
+              <div class="cart-header">
+                <h3>Shopping Cart</h3>
+                <button class="close-cart">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div class="cart-items">
+              </div>
+              <div class="cart-empty">Your cart is empty</div>
+              <div class="cart-footer">
+                <div class="cart-total">
+                  <span>Total:</span>
+                  <span class="total-amount">$0.00</span>
+                </div>
+                <button class="checkout-btn">Checkout</button>
+              </div>
+            </div>
+          </div>
+          <button class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="shop-header">
+        <h1 class="shop-title">Browse Our Collection</h1>
+        <p>Discover The Best Books</p>
+      </section>
+
+      
+      <section class="filters-section">
+        <div class="filters-container">
+          <div class="filter-group">
+            <label>Category</label>
+            <select id="category-filter">
+              <option value="">All Categories</option>
+              <option value="programming">Programming</option>
+              <option value="design-patterns">Design Patterns</option>
+              <option value="web-development">Web Development</option>
+              <option value="fiction">Fiction</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Price Range</label>
+            <select id="price-filter">
+              <option value="">All Prices</option>
+              <option value="0-25">$0 - $25</option>
+              <option value="25-50">$25 - $50</option>
+              <option value="50-100">$50 - $100</option>
+              <option value="100+">$100+</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Rating</label>
+            <select id="rating-filter">
+              <option value="">All Ratings</option>
+              <option value="4">4+ Stars</option>
+              <option value="3">3+ Stars</option>
+              <option value="2">2+ Stars</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Search</label>
+            <input
+              type="text"
+              id="search-filter"
+              placeholder="Search books..."
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="sort-section">
+        <select id="sort-options">
+          <option value="featured">Featured</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="rating">Highest Rated</option>
+        </select>
+        <div class="view-options">
+          <button class="view-option active" data-view="grid">
+            <i class="fas fa-th"></i>
+          </button>
+          <button class="view-option" data-view="list">
+            <i class="fas fa-list"></i>
+          </button>
+        </div>
+      </section>
+
+      <section class="shop-grid" id="shop-grid">
+      </section>
+
+      <div class="pagination" id="pagination">
+        <button class="active">1</button>
+        <button>2</button>
+        <button>3</button>
+        <button><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </main>
+
+    <footer class="main-footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About Us</h3>
+          <p>
+            Your Trusted Source for Any Kind Of Books.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Connect With Us</h3>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 TechBooks | All Rights Reserved</p>
+      </div>
+    </footer>
+
+    <div class="toast-container"></div>
+    <button class="back-to-top">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="/js/shop.js"></script>
+  </body>
+</html>
