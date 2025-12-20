@@ -433,7 +433,7 @@
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     position: relative;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    padding-top: 56.25%;
   }
   .video-container iframe {
     position: absolute;
@@ -667,7 +667,7 @@
       justify-content: space-between;
     }
   }
-  /* Cart Icon and Counter */
+
   .cart-wrapper {
     position: relative;
     margin-left: 2rem;
@@ -704,7 +704,7 @@
     font-weight: bold;
   }
   
-  /* Cart Dropdown */
+
   .cart-dropdown {
     position: absolute;
     top: 100%;
@@ -724,8 +724,7 @@
     display: block;
     animation: slideDown 0.3s ease;
   }
-  
-  /* Cart Header */
+
   .cart-header {
     display: flex;
     justify-content: space-between;
@@ -753,7 +752,7 @@
     color: var(--primary-color);
   }
   
-  /* Cart Items */
+
   .cart-items {
     margin-bottom: 1rem;
   }
@@ -788,8 +787,7 @@
     font-weight: 600;
     margin-bottom: 0.5rem;
   }
-  
-  /* Quantity Controls */
+
   .quantity {
     display: flex;
     align-items: center;
@@ -816,8 +814,7 @@
     min-width: 20px;
     text-align: center;
   }
-  
-  /* Remove Item Button */
+
   .cart-item button {
     background: none;
     border: none;
@@ -829,15 +826,14 @@
   .cart-item button:hover {
     color: #ff4757;
   }
-  
-  /* Empty Cart Message */
+
   .cart-empty {
     text-align: center;
     color: #888;
     padding: 1rem 0;
   }
   
-  /* Cart Footer */
+
   .cart-footer {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 1rem;
@@ -873,8 +869,7 @@
     transform: translateY(-2px);
     box-shadow: var(--shadow);
   }
-  
-  /* Animations */
+
   @keyframes slideDown {
     from {
       opacity: 0;
@@ -886,7 +881,7 @@
     }
   }
   
-  /* Scrollbar Styling */
+
   .cart-dropdown::-webkit-scrollbar {
     width: 8px;
   }
@@ -901,7 +896,7 @@
     border-radius: 4px;
   }
   
-  /* Responsive Styles */
+
   @media (max-width: 768px) {
     .cart-dropdown {
       width: 100%;
@@ -917,7 +912,7 @@
       position: relative;
       margin-left: 2rem;
     }
-  } /* Small devices (phones) */
+  }
   @media (max-width: 576px) {
     .hero-content h1 {
       font-size: 2rem;
@@ -936,8 +931,7 @@
       padding: 0.8rem 0.8rem 0.8rem 2.5rem;
     }
   }
-  
-  /* Navigation improvements for mobile */
+
   @media (max-width: 768px) {
     .nav-container {
       padding: 0.5rem;
@@ -962,7 +956,7 @@
     }
   }
   
-  /* Tablet improvements */
+
   @media (min-width: 769px) and (max-width: 1024px) {
     .books-grid {
       grid-template-columns: repeat(2, 1fr);
@@ -972,7 +966,7 @@
       padding: 1rem;
     }
   }
-  /* Cart responsive styles */
+
   @media (max-width: 768px) {
     .cart-dropdown {
       width: var(--cart-width-mobile);

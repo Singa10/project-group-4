@@ -1,4 +1,3 @@
-// Shop Page JavaScript
 class ShopManager {
     constructor() {
       // State
@@ -14,8 +13,6 @@ class ShopManager {
         rating: "",
         search: "",
       };
-  
-      // DOM Elements
       this.shopGrid = document.getElementById("shop-grid");
       this.categoryFilter = document.getElementById("category-filter");
       this.priceFilter = document.getElementById("price-filter");
@@ -37,7 +34,6 @@ class ShopManager {
     }
   
     async fetchProducts() {
-      // Simulated product data - Replace with actual API call
       this.products = [
         {
           id: 1,
@@ -386,7 +382,6 @@ class ShopManager {
       this.setupEventListeners();
     }
     setupEventListeners() {
-      // Filter listeners
       this.categoryFilter.addEventListener("change", () =>
         this.handleFilterChange()
       );
@@ -400,14 +395,12 @@ class ShopManager {
         "input",
         debounce(() => this.handleFilterChange(), 300)
       );
-  
-      // Sort listener
+
       this.sortSelect.addEventListener("change", (e) => {
         this.currentSort = e.target.value;
         this.applyFilters();
       });
-  
-      // View toggle listeners
+
       this.viewOptions.forEach((option) => {
         option.addEventListener("click", (e) => this.handleViewChange(e));
       });
@@ -444,12 +437,9 @@ if (this.filters.price) {
   }
 }
 
-  
-        // Rating filter
         if (this.filters.rating && product.rating < Number(this.filters.rating))
           return false;
-  
-        // Search filter
+
         if (
           this.filters.search &&
           !product.title.toLowerCase().includes(this.filters.search) &&
@@ -460,8 +450,7 @@ if (this.filters.price) {
   
         return true;
       });
-  
-      // Apply sorting
+
       this.applySorting();
       this.renderProducts();
       this.updatePagination();
@@ -478,7 +467,7 @@ if (this.filters.price) {
         case "rating":
           this.filteredProducts.sort((a, b) => b.rating - a.rating);
           break;
-        default: // featured
+        default:
           this.filteredProducts.sort((a, b) => b.reviews - a.reviews);
       }
     }
@@ -492,8 +481,7 @@ if (this.filters.price) {
       this.shopGrid.innerHTML = productsToShow
         .map((product) => this.generateProductHTML(product))
         .join("");
-  
-      // Reinitialize add to cart buttons
+
       document.querySelectorAll(".add-to-cart").forEach((button) => {
         button.addEventListener("click", (e) => this.handleAddToCart(e));
       });
@@ -589,7 +577,6 @@ if (this.filters.price) {
       const product = this.products.find((p) => p.id === Number(productId));
   
       if (product) {
-        // Integrate with your existing cart functionality
         const cartItem = {
           id: product.id,
           title: product.title,
@@ -597,8 +584,7 @@ if (this.filters.price) {
           image: product.image,
           quantity: 1,
         };
-  
-        // Dispatch custom event for cart update
+
         const event = new CustomEvent("addToCart", { detail: cartItem });
         document.dispatchEvent(event);
   
@@ -606,8 +592,7 @@ if (this.filters.price) {
       }
     }
   }
-  
-  // Utility function for debouncing
+
   function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -626,11 +611,9 @@ if (this.filters.price) {
       timeout = setTimeout(later, wait);
     };
   }
-  
-  // Initialize shop manager
+
   const shopManager = new ShopManager();
-  
-  // Toast notification function (if not already defined in your main JS)
+
   function showToast(message) {
     const toast = document.createElement("div");
     toast.classList.add("toast");
@@ -653,18 +636,12 @@ if (this.filters.price) {
       }, 300);
     }, 3000);
   }
-  
-  // Cart integration
+
   document.addEventListener("addToCart", (e) => {
-    // This should integrate with your existing cart functionality
     const cartItem = e.detail;
-    // Add your cart update logic here
   });
-  // shop.js
-  
-  // First, let's ensure we have the same header functionality as the home page
+
   document.addEventListener("DOMContentLoaded", () => {
-    // Header scroll effect
     const header = document.querySelector(".main-header");
     let lastScroll = 0;
   
@@ -748,13 +725,13 @@ if (this.filters.price) {
         .join("");
     }
   
-    // Toggle cart
+
     cartIcon.addEventListener("click", () => {
       isCartOpen = !isCartOpen;
       cartDropdown.style.display = isCartOpen ? "block" : "none";
     });
-  
-    // Close cart when clicking outside
+
+
     document.addEventListener("click", (e) => {
       if (!e.target.closest(".cart-wrapper") && isCartOpen) {
         isCartOpen = false;
@@ -762,7 +739,7 @@ if (this.filters.price) {
       }
     });
   
-    // Update quantity
+
     window.updateQuantity = (id, change) => {
       const itemIndex = cart.findIndex((item) => item.id === id);
       if (itemIndex !== -1) {
@@ -775,7 +752,7 @@ if (this.filters.price) {
       }
     };
   
-    // Remove from cart
+
     window.removeFromCart = (id) => {
       cart = cart.filter((item) => item.id !== id);
       localStorage.setItem("cart", JSON.stringify(cart));
@@ -783,7 +760,7 @@ if (this.filters.price) {
       showToast("Item removed from cart");
     };
   
-    // Add to cart function
+
     window.addToCart = (product) => {
       const existingItem = cart.find((item) => item.id === product.id);
   
@@ -801,12 +778,11 @@ if (this.filters.price) {
       showToast(`${product.title} added to cart!`);
     };
   
-    // Initial cart update
+
     updateCartUI();
   
-    // Shop specific functionality
+
     class ShopManager {
-      // ... (rest of the shop manager code remains the same)
   
       handleAddToCart(e) {
         const bookCard = e.target.closest(".book-card");
@@ -822,16 +798,14 @@ if (this.filters.price) {
             quantity: 1,
           };
   
-          window.addToCart(cartItem); // Use the global addToCart function
+          window.addToCart(cartItem);
         }
       }
     }
-  
-    // Initialize shop manager
+
     const shopManager = new ShopManager();
   });
-  
-  // Toast notification function
+
   function showToast(message) {
     const toastContainer = document.querySelector(".toast-container");
     const toast = document.createElement("div");

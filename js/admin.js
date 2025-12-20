@@ -1,20 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Elements
     const mobileToggle = document.querySelector(".mobile-toggle");
     const adminSidebar = document.querySelector(".admin-sidebar");
     const notificationBtn = document.querySelector(".admin-notifications");
     const notificationDropdown = document.querySelector(".notification-dropdown");
     const profileBtn = document.querySelector(".admin-profile");
     const profileDropdown = document.querySelector(".profile-dropdown");
-  
-    // Toggle Sidebar on Mobile
+
     if (mobileToggle) {
       mobileToggle.addEventListener("click", () => {
         adminSidebar.classList.toggle("active");
       });
     }
-  
-    // Toggle Notifications
+
     if (notificationBtn) {
       notificationBtn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -22,8 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
         profileDropdown.classList.remove("active");
       });
     }
-  
-    // Toggle Profile Dropdown
+
     if (profileBtn) {
       profileBtn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -31,44 +27,35 @@ document.addEventListener("DOMContentLoaded", function () {
         notificationDropdown.classList.remove("active");
       });
     }
-  
-    // Close dropdowns when clicking outside
+
     document.addEventListener("click", () => {
       notificationDropdown?.classList.remove("active");
       profileDropdown?.classList.remove("active");
     });
-  
-    // Initialize Charts
+
     initializeCharts();
-  
-    // Handle Table Search
     const searchInput = document.querySelector(".table-search");
     if (searchInput) {
       searchInput.addEventListener("input", handleTableSearch);
     }
-  
-    // Handle Table Sorting
+
     const sortButtons = document.querySelectorAll(".sort-btn");
     sortButtons.forEach((button) => {
       button.addEventListener("click", handleTableSort);
     });
-  
-    // Handle Status Updates
+
     const statusSelects = document.querySelectorAll(".status-select");
     statusSelects.forEach((select) => {
       select.addEventListener("change", handleStatusUpdate);
     });
-  
-    // Handle Delete Confirmations
+
     const deleteButtons = document.querySelectorAll(".delete-btn");
     deleteButtons.forEach((button) => {
       button.addEventListener("click", handleDelete);
     });
   });
-  
-  // Chart Initialization
+
   function initializeCharts() {
-    // Sales Chart
     const salesCtx = document.getElementById("salesChart");
     if (salesCtx) {
       new Chart(salesCtx, {
@@ -114,8 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
       });
     }
-  
-    // Categories Chart
+
     const categoriesCtx = document.getElementById("categoriesChart");
     if (categoriesCtx) {
       new Chart(categoriesCtx, {
@@ -149,8 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   }
-  
-  // Table Search
+
   function handleTableSearch(e) {
     const searchTerm = e.target.value.toLowerCase();
     const tableRows = document.querySelectorAll("tbody tr");
@@ -160,8 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
       row.style.display = text.includes(searchTerm) ? "" : "none";
     });
   }
-  
-  // Table Sorting
+
   function handleTableSort(e) {
     const button = e.target;
     const column = button.dataset.column;
@@ -178,52 +162,41 @@ document.addEventListener("DOMContentLoaded", function () {
     rows.forEach((row) => table.querySelector("tbody").appendChild(row));
     button.classList.toggle("asc");
   }
-  
-  // Status Update
+
   function handleStatusUpdate(e) {
     const select = e.target;
     const orderId = select.dataset.orderId;
     const newStatus = select.value;
-  
-    // Show loading state
+
     select.disabled = true;
-  
-    // Simulate API call
+
     setTimeout(() => {
       console.log(`Updated order ${orderId} status to ${newStatus}`);
-      // Update UI
       const statusBadge = select.closest("tr").querySelector(".status-badge");
       statusBadge.className = `status-badge status-${newStatus.toLowerCase()}`;
       statusBadge.textContent = newStatus;
       select.disabled = false;
-  
-      // Show success message
+
       showNotification("Status updated successfully", "success");
     }, 1000);
   }
-  
-  // Delete Confirmation
+
   function handleDelete(e) {
     const button = e.target;
     const itemId = button.dataset.id;
   
     if (confirm("Are you sure you want to delete this item?")) {
-      // Show loading state
       button.disabled = true;
-  
-      // Simulate API call
       setTimeout(() => {
         console.log(`Deleted item ${itemId}`);
-        // Remove row from table
         button.closest("tr").remove();
-  
-        // Show success message
+
         showNotification("Item deleted successfully", "success");
       }, 1000);
     }
   }
   
-  // Notification System
+
   function showNotification(message, type = "success") {
     const notification = document.createElement("div");
     notification.className = `notification notification-${type}`;
@@ -235,11 +208,8 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
   
     document.body.appendChild(notification);
-  
-    // Trigger animation
     setTimeout(() => notification.classList.add("show"), 10);
-  
-    // Remove notification
+
     setTimeout(() => {
       notification.classList.remove("show");
       setTimeout(() => notification.remove(), 300);

@@ -13,9 +13,8 @@ var swiper = new Swiper('.swiper-container', {
 });
 
 
-// about.js
+
 document.addEventListener("DOMContentLoaded", function () {
-    // Animate stats when in view
     const stats = document.querySelectorAll(".stat-number");
   
     const observerOptions = {
@@ -51,16 +50,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }, 16);
     }
-  
-    // Mobile menu functionality
+
     const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
     const navLinks = document.querySelector(".nav-links");
   
     mobileMenuBtn.addEventListener("click", () => {
       navLinks.classList.toggle("active");
     });
-  
-    // Smooth scroll for anchor links
+
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener("click", function (e) {
         e.preventDefault();

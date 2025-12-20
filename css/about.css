@@ -253,20 +253,18 @@
   }
 }
 
-/* Position navigation arrows inside the team section */
 .team-section .swiper-button-next,
 .team-section .swiper-button-prev {
-  color: #333;              /* arrow color */
-  top: 50%;                 /* vertically center relative to slider */
+  color: #333;
+  top: 50%;
   transform: translateY(-50%);
 }
 
-/* Optional: adjust horizontal placement */
 .team-section .swiper-button-next {
-  right: 10px;              /* move closer to the slider */
+  right: 10px;
 }
 
 .team-section .swiper-button-prev {
-  left: 10px;               /* move closer to the slider */
+  left: 10px;
 }
 

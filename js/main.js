@@ -1,4 +1,3 @@
-// DOM Elements
 const cartIcon = document.querySelector(".cart-icon");
 const cartDropdown = document.querySelector(".cart-dropdown");
 const cartItems = document.querySelector(".cart-items");
@@ -14,18 +13,16 @@ const modalBody = document.querySelector(".modal-body");
 const toastContainer = document.querySelector(".toast-container");
 const newsletterForm = document.getElementById("newsletter-form");
 
-// Cart State
+
 let cart = [];
 let isCartOpen = false;
 
-// Initialize
 document.addEventListener("DOMContentLoaded", () => {
   loadCartFromLocalStorage();
   setupEventListeners();
   updateCartUI();
 });
 
-// Event Listeners Setup
 function setupEventListeners() {
   cartIcon.addEventListener("click", toggleCart);
   document.addEventListener("click", handleOutsideClick);
@@ -34,21 +31,17 @@ function setupEventListeners() {
   checkoutBtn.addEventListener("click", handleCheckout);
   newsletterForm.addEventListener("submit", handleNewsletterSubmit);
 
-  // Add to Cart Buttons
   document.querySelectorAll(".add-to-cart").forEach((button) => {
     button.addEventListener("click", handleAddToCart);
   });
 
-  // Quick View Buttons
   document.querySelectorAll(".quick-view").forEach((button) => {
     button.addEventListener("click", handleQuickView);
   });
 
-  // Back to Top Button
   window.addEventListener("scroll", handleScroll);
 }
 
-// Cart Functions
 function toggleCart() {
   isCartOpen = !isCartOpen;
   cartDropdown.style.display = isCartOpen ? "block" : "none";
@@ -148,7 +141,6 @@ function renderCartItems() {
     .join("");
 }
 
-// Local Storage
 function saveCartToLocalStorage() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
@@ -161,7 +153,6 @@ function loadCartFromLocalStorage() {
   }
 }
 
-// Quick View Modal
 function handleQuickView(e) {
   const bookCard = e.target.closest(".book-card");
   const modalContent = `
@@ -195,7 +186,6 @@ function closeModalView() {
   modal.style.display = "none";
 }
 
-// Toast Notifications
 function showToast(message) {
   const toast = document.createElement("div");
   toast.classList.add("toast");
@@ -217,14 +207,14 @@ function showToast(message) {
   }, 3000);
 }
 
-// Mobile Menu
+
 function toggleMobileMenu() {
   navLinks.classList.toggle("active");
   mobileMenuToggle.querySelector("i").classList.toggle("fa-bars");
   mobileMenuToggle.querySelector("i").classList.toggle("fa-times");
 }
 
-// Newsletter
+
 function handleNewsletterSubmit(e) {
   e.preventDefault();
   const email = e.target.querySelector('input[type="email"]').value;
@@ -232,17 +222,15 @@ function handleNewsletterSubmit(e) {
   e.target.reset();
 }
 
-// Checkout
+
 function handleCheckout() {
   if (cart.length === 0) {
     showToast("Your cart is empty!");
     return;
   }
   showToast("Proceeding to checkout...");
-  // Add your checkout logic here
 }
 
-// Back to Top
 function handleScroll() {
   const backToTop = document.querySelector(".back-to-top");
   if (window.scrollY > 300) {
@@ -252,7 +240,6 @@ function handleScroll() {
   }
 }
 
-// Add this to your CSS if not already present
 const style = document.createElement("style");
 style.textContent = `
     .toast-container {
