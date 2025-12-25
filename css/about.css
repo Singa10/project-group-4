@@ -253,11 +253,34 @@
   }
 }
 
+
+.team-section .swiper-container {
+  position: relative;
+  width: 100%;
+  padding: 2rem 0; 
+}
+
+
+.team-section .swiper-wrapper {
+  display: flex;
+}
+
+
+.team-section .swiper-slide {
+  flex-shrink: 0;
+  width: 100%; 
+  display: flex;
+  justify-content: center;
+}
+
+
 .team-section .swiper-button-next,
 .team-section .swiper-button-prev {
-  color: #333;
+  color: var(--primary-color);
+  position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 10;
 }
 
 .team-section .swiper-button-next {

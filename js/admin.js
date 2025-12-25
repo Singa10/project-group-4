@@ -81,9 +81,9 @@ document.addEventListener("DOMContentLoaded", function () {
           },
           scales: {
             y: {
-              beginAtZero: true,
+               beginAtZero: true,
               grid: {
-                color: "rgba(255, 255, 255, 0.1)",
+                 color: "rgba(255, 255, 255, 0.1)",
               },
               ticks: {
                 color: "#888",
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
       new Chart(categoriesCtx, {
         type: "doughnut",
         data: {
-          labels: ["Programming", "Web Dev", "Database", "DevOps", "Others"],
+          labels: ["Programming", "Fiction", "Non-Fiction", "Science and Technology", "Others"],
           datasets: [
             {
               data: [30, 25, 20, 15, 10],
@@ -190,7 +190,6 @@ document.addEventListener("DOMContentLoaded", function () {
       setTimeout(() => {
         console.log(`Deleted item ${itemId}`);
         button.closest("tr").remove();
-
         showNotification("Item deleted successfully", "success");
       }, 1000);
     }
