@@ -490,7 +490,7 @@ if (this.filters.price) {
     generateProductHTML(product) {
       return `
             <div class="book-card" data-id="${product.id}">
-                <div class="book-badge">${
+                <div class="book-badge" style="cursor:pointer;">${
                   product.inStock ? "In Stock" : "Out of Stock"
                 }</div>
                 <div class="book-image">
