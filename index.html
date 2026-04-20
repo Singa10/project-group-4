@@ -368,11 +368,13 @@
           <i class="fas fa-envelope-open-text newsletter-icon"></i>
           <h2>Stay Updated</h2>
           <p>Get notified about new releases and exclusive deals</p>
-          <form id="newsletter-form" class="newsletter-form">
-            <div class="input-group">
-              <i class="fas fa-envelope"></i>
-              <input type="email" placeholder="Enter your email" required />
-            </div>
+          <form id="newsletter-form" class="newsletter-form" 
+      action="./php/contact/newsletter.php" method="POST">
+    <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input type="email" name="email" id="newsletter-email"
+               placeholder="Enter your email" required maxlength="100" />
+    </div>
             <button type="submit">
               <span>Subscribe</span>
               <i class="fas fa-arrow-right"></i>
@@ -409,10 +411,13 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2024 TechBooks | All Rights Reserved</p>
+        <p>&copy; 2025 TechBooks | All Rights Reserved</p>
       </div>
     </footer>
-
+     
+    <div class="toast-container"></div>
+    
+    <script src="js/auth-check.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

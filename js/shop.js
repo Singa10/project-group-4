@@ -1,826 +1,488 @@
+// =============================================
+// SHOP MANAGER — Connected to PHP/MySQL Backend
+// =============================================
+
 class ShopManager {
     constructor() {
-      // State
-      this.products = [];
-      this.filteredProducts = [];
-      this.currentPage = 1;
-      this.itemsPerPage = 12;
-      this.currentView = "grid";
-      this.currentSort = "featured";
-      this.filters = {
-        category: "",
-        price: "",
-        rating: "",
-        search: "",
-      };
-      this.shopGrid = document.getElementById("shop-grid");
-      this.categoryFilter = document.getElementById("category-filter");
-      this.priceFilter = document.getElementById("price-filter");
-      this.ratingFilter = document.getElementById("rating-filter");
-      this.searchFilter = document.getElementById("search-filter");
-      this.sortSelect = document.getElementById("sort-options");
-      this.viewOptions = document.querySelectorAll(".view-option");
-      this.pagination = document.getElementById("pagination");
-  
-      // Initialize
-      this.init();
-    }
-  
-    async init() {
-      await this.fetchProducts();
-      this.setupEventListeners();
-      this.applyFilters();
-      this.renderProducts();
-    }
-  
-    async fetchProducts() {
-      this.products = [
-        {
-          id: 1,
-          title: "Clean Code",
-          author: "Robert C. Martin",
-          price: 44.99,
-          rating: 4.8,
-          reviews: 1250,
-          category: "programming",
-          image:
-            "https://m.media-amazon.com/images/I/41xShlnTZTL._SX376_BO1,204,203,200_.jpg",
-          description: "A Handbook of Agile Software Craftsmanship",
-          inStock: true,
-        },
-        {
-          id: 2,
-          title: "Design Patterns",
-          author: "Erich Gamma et al.",
-          price: 54.99,
-          rating: 4.7,
-          reviews: 980,
-          category: "design-patterns",
-          image:
-            "https://i1.wp.com/springframework.guru/wp-content/uploads/2015/04/9780201633610.jpg?resize=520%2C648",
-          description: "Elements of Reusable Object-Oriented Software",
-          inStock: true,
-        },
-        {
-          id: 3,
-          title: "The Pragmatic Programmer",
-          author: "Andrew Hunt & David Thomas",
-          price: 49.99,
-          rating: 4.9,
-          reviews: 1500,
-          category: "programming",
-          image: "https://th.bing.com/th/id/OIP.qj6BQ0g14hMcS78qxOl9iwHaJp",
-          description: "Your Journey to Mastery",
-          inStock: true,
-        },
-        {
-          id: 4,
-          title: "Code Complete",
-          author: "Steve McConnell",
-          price: 19.99,
-          rating: 4.7,
-          reviews: 1120,
-          category: "software-construction",
-          image:
-            "https://images-na.ssl-images-amazon.com/images/I/41JOmGowq-L._SX408_BO1,204,203,200_.jpg",
-          description: "A Practical Handbook of Software Construction",
-          inStock: true,
-        },
-        {
-          id: 5,
-          title: "Head First Design Patterns",
-          author: "Eric Freeman & Elisabeth Robson",
-          price: 45.99,
-          rating: 4.7,
-          reviews: 900,
-          category: "design-patterns",
-          image:
-            "https://images-na.ssl-images-amazon.com/images/I/61APhXCksuL._SX430_BO1,204,203,200_.jpg",
-          description: "A Brain-Friendly Guide",
-          inStock: true,
-        },
-        {
-          id: 6,
-          title: "Refactoring",
-          author: "Martin Fowler",
-          price: 46.99,
-          rating: 4.8,
-          reviews: 850,
-          category: "code-improvement",
-          image:
-            "https://images-na.ssl-images-amazon.com/images/I/41LBzpPXCOL._SX379_BO1,204,203,200_.jpg",
-          description: "Improving the Design of Existing Code",
-          inStock: true,
-        },
-        {
-          id: 7,
-          title: "You Don't Know JS",
-          author: "Kyle Simpson",
-          price: 39.99,
-          rating: 4.6,
-          reviews: 700,
-          category: "javascript",
-          image: "../images/you don know js book series.jfif",
-          description: "A deep dive into the core mechanisms of JavaScript",
-          inStock: true,
-        },
-        {
-          id: 8,
-          title: "Eloquent JavaScript",
-          author: "Marijn Haverbeke",
-          price: 35.99,
-          rating: 4.5,
-          reviews: 580,
-          category: "javascript",
-          image:
-            "https://images-na.ssl-images-amazon.com/images/I/91asIC1fRwL.jpg",
-          description: "A Modern Introduction to Programming",
-          inStock: true,
-        },
-        {
-          id: 9,
-          title: "The Art of Computer Programming",
-          author: "Donald E. Knuth",
-          price: 190.0,
-          rating: 4.9,
-          reviews: 400,
-          category: "computer-science",
-          image:
-            "https://media.elefant.ro/mnresize/1000/-/images/28/1736328/the-art-of-computer-programming-volume-1-fundamental-algorithms-hardcover-3rd-ed_1_fullsize.jpg",
-          description: "Comprehensive coverage of algorithms and data structures",
-          inStock: true,
-        },
-        {
-          id: 10,
-          title: "Introduction to Algorithms",
-          author: "Thomas H. Cormen et al.",
-          price: 80.0,
-          rating: 4.8,
-          reviews: 650,
-          category: "algorithms",
-          image:
-            "https://imgv2-2-f.scribdassets.com/img/document/544555770/original/1f27e81b4c/1702740355?v=1",
-          description:
-            "Comprehensive introduction to the modern study of computer algorithms",
-          inStock: true,
-        },
-        {
-          id: 11,
-          title: "Cracking the Coding Interview",
-          author: "Gayle Laakmann McDowell",
-          price: 35.99,
-          rating: 4.9,
-          reviews: 2200,
-          category: "career",
-          image:
-            "https://th.bing.com/th/id/R.1146e2b3ef30e028082c77d4ddb746fe?rik=qlLBpCdkVLbFBQ&pid=ImgRaw&r=0",
-          description: "189 Programming Questions and Solutions",
-          inStock: true,
-        },
-        {
-          id: 12,
-          title: "Programming Pearls",
-          author: "Jon Bentley",
-          price: 29.99,
-          rating: 4.6,
-          reviews: 450,
-          category: "programming",
-          image:
-            "https://th.bing.com/th/id/R.66ba7d2264d2c26b783d5a705571b6fd?rik=Bhl4gfKS5dyk0g&riu=http%3a%2f%2fimg.valorebooks.com%2fFULL%2f97%2f9780%2f978020%2f9780201657883.jpg&ehk=PWGlWg2uGdkyWxnWyLR4mc%2fR1Zj2Jhccg97l5spGP20%3d&risl=&pid=ImgRaw&r=0",
-          description: "A treasure trove of practical programming techniques",
-          inStock: true,
-        },
-        {
-          id: 13,
-          title: "To kill a Mockingbird",
-          author: "harper Lee",
-          price: 44.99,
-          rating: 4.8,
-          reviews: 650,
-          category: "fiction",
-          image:
-            "../images/to kill a mokingbird.jfif",
-          description:
-            "Comprehensive introduction to the modern study of computer algorithms",
-          inStock: true,
-        },
-        
-{
-  id: 14,
-  title: "1984",
-  author: "George Orwell",
-  price: 29.99,
-  rating: 4.7,
-  reviews: 1200,
-  category: "fiction",
-  image: "../images/George Orwell BBC Arena Documentary, 1984_ this….jfif",
-  description: "A dystopian novel exploring surveillance, control, and truth.",
-  inStock: true,
-},
-{
-  id: 15,
-  title: "Pride and Prejudice",
-  author: "Jane Austen",
-  price: 24.99,
-  rating: 4.6,
-  reviews: 950,
-  category: "fiction",
-  image: "../images/The image depicts a classic book cover for Jane… (2).jfif",
-  description: "A classic romance novel about love, class, and society.",
-  inStock: true,
-},
-{
-  id: 16,
-  title: "The Great Gatsby",
-  author: "F. Scott Fitzgerald",
-  price: 27.99,
-  rating: 4.5,
-  reviews: 870,
-  category: "fiction",
-  image: "../images/Vintage Book Cover Print _The Great Gatsby_ - F….jfif",
-  description: "A story of wealth, love, and the American dream.",
-  inStock: true,
-},
-
-{
-  id: 17,
-  title: "Sapiens: A Brief History of Humankind",
-  author: "Yuval Noah Harari",
-  price: 39.99,
-  rating: 4.8,
-  reviews: 2100,
-  category: "non-fiction",
-  image: "../images/From a renowned historian comes a groundbreaking… (1).jfif",
-  description: "Explores the history and impact of Homo sapiens.",
-  inStock: true,
-},
-{
-  id: 18,
-  title: "Educated",
-  author: "Tara Westover",
-  price: 34.99,
-  rating: 4.7,
-  reviews: 1600,
-  category: "non-fiction",
-  image: "../images/Educated by Tara Westover on Apple Books (1).jfif",
-  description: "A memoir about resilience, family, and the pursuit of education.",
-  inStock: true,
-},
-{
-  id: 19,
-  title: "Becoming",
-  author: "Michelle Obama",
-  price: 36.99,
-  rating: 4.9,
-  reviews: 2500,
-  category: "non-fiction",
-  image: "../images/Becoming - Michelle Obama.jfif",
-  description: "The inspiring memoir of the former First Lady of the United States.",
-  inStock: true,
-},
-
-{
-  id: 20,
-  title: "Thinking, Fast and Slow",
-  author: "Daniel Kahneman",
-  price: 42.99,
-  rating: 4.8,
-  reviews: 3000,
-  category: "psychology",
-  image: "../images/download (1).jfif",
-  description: "Examines two modes of thought: fast, intuitive and slow, deliberate.",
-  inStock: true,
-},
-{
-  id: 21,
-  title: "Man's Search for Meaning",
-  author: "Viktor E. Frankl",
-  price:19.99,
-  rating: 4.9,
-  reviews: 2800,
-  category: "psychology",
-  image: "../images/Man's search for meaning_.jfif",
-  description: "A psychiatrist’s reflections on life in Nazi camps and finding meaning.",
-  inStock: true,
-},
-{
-  id: 22,
-  title: "The Power of Habit",
-  author: "Charles Duhigg",
-  price: 33.99,
-  rating: 4.6,
-  reviews: 1900,
-  category: "psychology",
-  image: "../images/The Power of Habit_ A Book Review.jfif",
-  description: "Explores how habits are formed and how they can be changed.",
-  inStock: true,
-},
-{
-  id: 23,
-  title: "Influence: The Psychology of Persuasion",
-  author: "Robert B. Cialdini",
-  price: 15.99,
-  rating: 4.7,
-  reviews: 2200,
-  category: "psychology",
-  image: "../images/_Influence_ By Robert Cialdini  This book was….jfif",
-  description: "A classic book on persuasion and human behavior.",
-  inStock: true,
-},
-{
-  id: 24,
-  title: "HTML & CSS: Design and Build Websites",
-  author: "Jon Duckett",
-  price: 15.99,
-  rating: 4.7,
-  reviews: 3200,
-  category: "web-development",
-  image: "../images/abed8b64-1afd-4fc4-bdc2-6f0fa1385941.jfif",
-  description: "Beginner-friendly guide to HTML and CSS with visual examples.",
-  inStock: true,
-},
-{
-  id: 25,
-  title: "JavaScript: The Good Parts",
-  author: "Douglas Crockford",
-  price: 109.99,
-  rating: 4.6,
-  reviews: 2800,
-  category: "web-development",
-  image: "../images/JavaScript_ The Modern Parts.jfif",
-  description: "A concise guide highlighting the most effective features of JavaScript.",
-  inStock: true,
-},
-{
-  id: 26,
-  title: "Don't Make Me Think, Revisited",
-  author: "Steve Krug",
-  price: 102.99,
-  rating: 4.9,
-  reviews: 5000,
-  category: "web-development",
-  image: "../images/Great book on user experience_ Don't make me….jfif",
-  description: "Classic usability guide for intuitive web design.",
-  inStock: true,
-},
-{
-  id: 27,
-  title: "Learning Web Design (5th Edition)",
-  author: "Jennifer Niederst Robbins",
-  price: 119.99,
-  rating: 4.7,
-  reviews: 2800,
-  category: "web-development",
-  image: "../images/Learning Web Design_ A Beginner's Guide to HTML… (1).jfif",
-  description: "Comprehensive introduction to HTML, CSS, JavaScript, and web graphics.",
-  inStock: true,
-},
-
-
-      ];
-  
-      this.setupEventListeners();
-    }
-    setupEventListeners() {
-      this.categoryFilter.addEventListener("change", () =>
-        this.handleFilterChange()
-      );
-      this.priceFilter.addEventListener("change", () =>
-        this.handleFilterChange()
-      );
-      this.ratingFilter.addEventListener("change", () =>
-        this.handleFilterChange()
-      );
-      this.searchFilter.addEventListener(
-        "input",
-        debounce(() => this.handleFilterChange(), 300)
-      );
-
-      this.sortSelect.addEventListener("change", (e) => {
-        this.currentSort = e.target.value;
-        this.applyFilters();
-      });
-
-      this.viewOptions.forEach((option) => {
-        option.addEventListener("click", (e) => this.handleViewChange(e));
-      });
-    }
-  
-    handleFilterChange() {
-      this.filters = {
-        category: this.categoryFilter.value,
-        price: this.priceFilter.value,
-        rating: this.ratingFilter.value,
-        search: this.searchFilter.value.toLowerCase(),
-      };
-      this.currentPage = 1;
-      this.applyFilters();
-    }
-  
-    applyFilters() {
-      this.filteredProducts = this.products.filter((product) => {
-      
-        if (this.filters.category && product.category !== this.filters.category)
-          return false;
-  
-        
-          
-if (this.filters.price) {
-  if (this.filters.price.includes("+")) {
-    
-    const min = parseFloat(this.filters.price);
-    if (product.price < min) return false;
-  } else {
-   
-    const [min, max] = this.filters.price.split("-").map(Number);
-    if (product.price < min || product.price > max) return false;
-  }
-}
-
-        if (this.filters.rating && product.rating < Number(this.filters.rating))
-          return false;
-
-        if (
-          this.filters.search &&
-          !product.title.toLowerCase().includes(this.filters.search) &&
-          !product.author.toLowerCase().includes(this.filters.search)
-        ) {
-          return false;
-        }
-  
-        return true;
-      });
-
-      this.applySorting();
-      this.renderProducts();
-      this.updatePagination();
-    }
-  
-    applySorting() {
-      switch (this.currentSort) {
-        case "price-low":
-          this.filteredProducts.sort((a, b) => a.price - b.price);
-          break;
-        case "price-high":
-          this.filteredProducts.sort((a, b) => b.price - a.price);
-          break;
-        case "rating":
-          this.filteredProducts.sort((a, b) => b.rating - a.rating);
-          break;
-        default:
-          this.filteredProducts.sort((a, b) => b.reviews - a.reviews);
-      }
-    }
-  
-    renderProducts() {
-      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-      const endIndex = startIndex + this.itemsPerPage;
-      const productsToShow = this.filteredProducts.slice(startIndex, endIndex);
-  
-      this.shopGrid.className = `shop-grid ${this.currentView}-view`;
-      this.shopGrid.innerHTML = productsToShow
-        .map((product) => this.generateProductHTML(product))
-        .join("");
-
-      document.querySelectorAll(".add-to-cart").forEach((button) => {
-        button.addEventListener("click", (e) => this.handleAddToCart(e));
-      });
-    }
-  
-    generateProductHTML(product) {
-      return `
-            <div class="book-card" data-id="${product.id}">
-                <div class="book-badge" style="cursor:pointer;">${
-                  product.inStock ? "In Stock" : "Out of Stock"
-                }</div>
-                <div class="book-image">
-                    <img src="${product.image}" alt="${product.title}">
-                    <div class="book-overlay">
-                        <button class="quick-view">Quick View</button>
-                    </div>
-                </div>
-                <div class="book-info">
-                    <div class="book-category">${product.category}</div>
-                    <h3>${product.title}</h3>
-                    <div class="author">${product.author}</div>
-                    <div class="book-rating">
-                        ${this.generateRatingStars(product.rating)}
-                        <span>(${product.reviews})</span>
-                    </div>
-                    <div class="price">$${product.price.toFixed(2)}</div>
-                    <button class="add-to-cart" ${
-                      !product.inStock ? "disabled" : ""
-                    }>
-                        <i class="fas fa-shopping-cart"></i>
-                        Add to Cart
-                    </button>
-                </div>
-            </div>
-        `;
-    }
-  
-    generateRatingStars(rating) {
-      const fullStars = Math.floor(rating);
-      const hasHalfStar = rating % 1 >= 0.5;
-      let stars = "";
-  
-      for (let i = 0; i < 5; i++) {
-        if (i < fullStars) {
-          stars += '<i class="fas fa-star"></i>';
-        } else if (i === fullStars && hasHalfStar) {
-          stars += '<i class="fas fa-star-half-alt"></i>';
-        } else {
-          stars += '<i class="far fa-star"></i>';
-        }
-      }
-  
-      return stars;
-    }
-  
-    updatePagination() {
-      const totalPages = Math.ceil(
-        this.filteredProducts.length / this.itemsPerPage
-      );
-      let paginationHTML = "";
-  
-      for (let i = 1; i <= totalPages; i++) {
-        paginationHTML += `
-                <button class="${i === this.currentPage ? "active" : ""}" 
-                        onclick="shopManager.goToPage(${i})">
-                    ${i}
-                </button>
-            `;
-      }
-  
-      this.pagination.innerHTML = paginationHTML;
-    }
-  
-    goToPage(page) {
-      this.currentPage = page;
-      this.renderProducts();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  
-    handleViewChange(e) {
-      const button = e.currentTarget;
-      this.currentView = button.dataset.view;
-  
-      this.viewOptions.forEach((option) => option.classList.remove("active"));
-      button.classList.add("active");
-  
-      this.renderProducts();
-    }
-  
-    handleAddToCart(e) {
-      const bookCard = e.target.closest(".book-card");
-      const productId = bookCard.dataset.id;
-      const product = this.products.find((p) => p.id === Number(productId));
-  
-      if (product) {
-        const cartItem = {
-          id: product.id,
-          title: product.title,
-          price: product.price,
-          image: product.image,
-          quantity: 1,
+        this.products = [];
+        this.filteredProducts = [];
+        this.currentPage = 1;
+        this.itemsPerPage = 12;
+        this.currentView = "grid";
+        this.currentSort = "featured";
+        this.totalPages = 1;
+        this.isLoggedIn = false;
+        this.filters = {
+            category: "",
+            price: "",
+            rating: "",
+            search: "",
         };
 
-        const event = new CustomEvent("addToCart", { detail: cartItem });
-        document.dispatchEvent(event);
-  
-        showToast(`${product.title} added to cart!`);
-      }
-    }
-  }
+        this.shopGrid = document.getElementById("shop-grid");
+        this.categoryFilter = document.getElementById("category-filter");
+        this.priceFilter = document.getElementById("price-filter");
+        this.ratingFilter = document.getElementById("rating-filter");
+        this.searchFilter = document.getElementById("search-filter");
+        this.sortSelect = document.getElementById("sort-options");
+        this.viewOptions = document.querySelectorAll(".view-option");
+        this.pagination = document.getElementById("pagination");
 
-  function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-      if (!func) {
-        throw new Error("Debounce function cannot be null or undefined.");
-      }
-      const later = () => {
-        clearTimeout(timeout);
+        this.init();
+    }
+
+    async init() {
+        await this.checkLoginStatus();
+        await this.fetchProducts();
+        this.setupEventListeners();
+    }
+
+    // ---- Check Login Status ----
+    async checkLoginStatus() {
         try {
-          func(...args);
-        } catch (error) {
-          console.error(error);
+            var res = await fetch("../php/user/get_profile.php");
+            var data = await res.json();
+            this.isLoggedIn = data.loggedIn;
+
+            if (data.loggedIn && data.data) {
+                this.updateNavForLoggedInUser(data.data);
+            }
+        } catch (e) {
+            this.isLoggedIn = false;
         }
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  }
-
-  const shopManager = new ShopManager();
-
-  function showToast(message) {
-    const toast = document.createElement("div");
-    toast.classList.add("toast");
-    toast.innerHTML = `
-        <i class="fas fa-check-circle"></i>
-        <span>${message}</span>
-    `;
-  
-    const toastContainer = document.querySelector(".toast-container");
-    toastContainer.appendChild(toast);
-  
-    setTimeout(() => {
-      toast.classList.add("show");
-    }, 100);
-  
-    setTimeout(() => {
-      toast.classList.remove("show");
-      setTimeout(() => {
-        toastContainer.removeChild(toast);
-      }, 300);
-    }, 3000);
-  }
-
-  document.addEventListener("addToCart", (e) => {
-    const cartItem = e.detail;
-  });
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const header = document.querySelector(".main-header");
-    let lastScroll = 0;
-  
-    window.addEventListener("scroll", () => {
-      const currentScroll = window.pageYOffset;
-  
-      if (currentScroll <= 0) {
-        header.classList.remove("scroll-up");
-        return;
-      }
-  
-      if (
-        currentScroll > lastScroll &&
-        !header.classList.contains("scroll-down")
-      ) {
-        header.classList.remove("scroll-up");
-        header.classList.add("scroll-down");
-      } else if (
-        currentScroll < lastScroll &&
-        header.classList.contains("scroll-down")
-      ) {
-        header.classList.remove("scroll-down");
-        header.classList.add("scroll-up");
-      }
-      lastScroll = currentScroll;
-    });
-    const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
-    const navLinks = document.querySelector(".nav-links");
-  
-    mobileMenuToggle.addEventListener("click", () => {
-      navLinks.classList.toggle("active");
-      mobileMenuToggle.querySelector("i").classList.toggle("fa-bars");
-      mobileMenuToggle.querySelector("i").classList.toggle("fa-times");
-    });
-  
-    const cartIcon = document.querySelector(".cart-icon");
-    const cartDropdown = document.querySelector(".cart-dropdown");
-    const cartItems = document.querySelector(".cart-items");
-    const cartCount = document.querySelector(".cart-count");
-    const cartEmpty = document.querySelector(".cart-empty");
-    const totalAmount = document.querySelector(".total-amount");
-    let isCartOpen = false;
-  
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  
-    function updateCartUI() {
-      cartCount.textContent = cart.reduce(
-        (total, item) => total + item.quantity,
-        0
-      );
-      cartEmpty.style.display = cart.length === 0 ? "block" : "none";
-  
-      const total = cart.reduce(
-        (sum, item) => sum + item.price * item.quantity,
-        0
-      );
-      totalAmount.textContent = `$${total.toFixed(2)}`;
-  
-      cartItems.innerHTML = cart
-        .map(
-          (item) => `
-            <div class="cart-item" data-id="${item.id}">
-                <img src="${item.image}" alt="${item.title}">
-                <div class="cart-item-details">
-                    <h4>${item.title}</h4>
-                    <p>$${item.price.toFixed(2)}</p>
-                    <div class="quantity-controls">
-                        <button onclick="updateQuantity(${
-                          item.id
-                        }, -1)">-</button>
-                        <span>${item.quantity}</span>
-                        <button onclick="updateQuantity(${item.id}, 1)">+</button>
-                    </div>
-                </div>
-                <button onclick="removeFromCart(${item.id})" class="remove-item">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-        `
-        )
-        .join("");
     }
-  
 
-    cartIcon.addEventListener("click", () => {
-      isCartOpen = !isCartOpen;
-      cartDropdown.style.display = isCartOpen ? "block" : "none";
-    });
-
-
-    document.addEventListener("click", (e) => {
-      if (!e.target.closest(".cart-wrapper") && isCartOpen) {
-        isCartOpen = false;
-        cartDropdown.style.display = "none";
-      }
-    });
-  
-
-    window.updateQuantity = (id, change) => {
-      const itemIndex = cart.findIndex((item) => item.id === id);
-      if (itemIndex !== -1) {
-        cart[itemIndex].quantity += change;
-        if (cart[itemIndex].quantity <= 0) {
-          cart.splice(itemIndex, 1);
+    updateNavForLoggedInUser(user) {
+        var loginBtn = document.querySelector(".login-btn");
+        if (loginBtn) {
+            loginBtn.innerHTML = '<i class="fas fa-user"></i> ' + user.username;
+            loginBtn.href = "#";
+            loginBtn.addEventListener("click", function(e) { e.preventDefault(); });
         }
-        localStorage.setItem("cart", JSON.stringify(cart));
-        updateCartUI();
-      }
-    };
-  
 
-    window.removeFromCart = (id) => {
-      cart = cart.filter((item) => item.id !== id);
-      localStorage.setItem("cart", JSON.stringify(cart));
-      updateCartUI();
-      showToast("Item removed from cart");
-    };
-  
+        var navLinks = document.querySelector(".nav-links");
+        if (navLinks && !navLinks.querySelector(".logout-link")) {
+            var logoutItem = document.createElement("li");
+            logoutItem.classList.add("logout-link");
+            logoutItem.innerHTML = '<a href="../php/auth/logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>';
+            navLinks.appendChild(logoutItem);
+        }
 
-    window.addToCart = (product) => {
-      const existingItem = cart.find((item) => item.id === product.id);
-  
-      if (existingItem) {
-        existingItem.quantity++;
-      } else {
-        cart.push({
-          ...product,
-          quantity: 1,
+        var cartCount = document.querySelector(".cart-count");
+        if (cartCount && user.cartCount !== undefined) {
+            cartCount.textContent = user.cartCount;
+        }
+    }
+
+    // ---- Fetch Products from PHP ----
+    async fetchProducts() {
+        try {
+            var params = new URLSearchParams({
+                category: this.filters.category,
+                price: this.filters.price,
+                rating: this.filters.rating,
+                search: this.filters.search,
+                sort: this.currentSort,
+                page: this.currentPage,
+                limit: this.itemsPerPage,
+            });
+
+            var res = await fetch("../php/books/get_books.php?" + params);
+            var data = await res.json();
+
+            if (data.success) {
+                this.products = data.data;
+                this.filteredProducts = data.data;
+                this.totalPages = data.totalPages;
+                this.renderProducts();
+                this.updatePagination();
+            } else {
+                if (this.shopGrid) {
+                    this.shopGrid.innerHTML = '<p class="no-results">Failed to load books.</p>';
+                }
+            }
+        } catch (e) {
+            if (this.shopGrid) {
+                this.shopGrid.innerHTML = '<p class="no-results">Error connecting to server.</p>';
+            }
+        }
+    }
+
+    setupEventListeners() {
+        var self = this;
+
+        if (this.categoryFilter) {
+            this.categoryFilter.addEventListener("change", function() { self.handleFilterChange(); });
+        }
+        if (this.priceFilter) {
+            this.priceFilter.addEventListener("change", function() { self.handleFilterChange(); });
+        }
+        if (this.ratingFilter) {
+            this.ratingFilter.addEventListener("change", function() { self.handleFilterChange(); });
+        }
+        if (this.searchFilter) {
+            this.searchFilter.addEventListener("input", debounce(function() { self.handleFilterChange(); }, 300));
+        }
+        if (this.sortSelect) {
+            this.sortSelect.addEventListener("change", function(e) {
+                self.currentSort = e.target.value;
+                self.currentPage = 1;
+                self.fetchProducts();
+            });
+        }
+        if (this.viewOptions) {
+            this.viewOptions.forEach(function(option) {
+                option.addEventListener("click", function(e) { self.handleViewChange(e); });
+            });
+        }
+    }
+
+    handleFilterChange() {
+        this.filters = {
+            category: this.categoryFilter ? this.categoryFilter.value : "",
+            price: this.priceFilter ? this.priceFilter.value : "",
+            rating: this.ratingFilter ? this.ratingFilter.value : "",
+            search: this.searchFilter ? this.searchFilter.value.toLowerCase() : "",
+        };
+        this.currentPage = 1;
+        this.fetchProducts();
+    }
+
+    renderProducts() {
+        if (!this.shopGrid) return;
+
+        if (this.filteredProducts.length === 0) {
+            this.shopGrid.innerHTML = '<p class="no-results">No books found matching your criteria.</p>';
+            return;
+        }
+
+        this.shopGrid.className = "shop-grid " + this.currentView + "-view";
+
+        var self = this;
+        this.shopGrid.innerHTML = this.filteredProducts.map(function(product) {
+            return self.generateProductHTML(product);
+        }).join("");
+
+        document.querySelectorAll(".add-to-cart").forEach(function(button) {
+            button.addEventListener("click", function(e) { self.handleAddToCart(e); });
         });
-      }
-  
-      localStorage.setItem("cart", JSON.stringify(cart));
-      updateCartUI();
-      showToast(`${product.title} added to cart!`);
-    };
-  
-
-    updateCartUI();
-  
-
-    class ShopManager {
-  
-      handleAddToCart(e) {
-        const bookCard = e.target.closest(".book-card");
-        const productId = parseInt(bookCard.dataset.id);
-        const product = this.products.find((p) => p.id === productId);
-  
-        if (product) {
-          const cartItem = {
-            id: product.id,
-            title: product.title,
-            price: product.price,
-            image: product.image,
-            quantity: 1,
-          };
-  
-          window.addToCart(cartItem);
-        }
-      }
     }
 
-    const shopManager = new ShopManager();
-  });
+    generateProductHTML(product) {
+        var stars = this.generateRatingStars(parseFloat(product.rating));
+        var inStock = product.in_stock == 1;
+        var badge = product.badge ? product.badge : (inStock ? "In Stock" : "Out of Stock");
+        var categoryName = product.category_name || product.category_slug || "";
+        var price = parseFloat(product.price).toFixed(2);
 
-  function showToast(message) {
-    const toastContainer = document.querySelector(".toast-container");
-    const toast = document.createElement("div");
+        return '<div class="book-card" data-id="' + product.id + '">' +
+            '<div class="book-badge">' + badge + '</div>' +
+            '<div class="book-image">' +
+                '<img src="' + product.image + '" alt="' + product.title + '" onerror="this.onerror=null;this.style.display=\'none\'">' +
+                '<div class="book-overlay"><button class="quick-view">Quick View</button></div>' +
+            '</div>' +
+            '<div class="book-info">' +
+                '<div class="book-category">' + categoryName + '</div>' +
+                '<h3>' + product.title + '</h3>' +
+                '<div class="author">' + product.author + '</div>' +
+                '<div class="book-rating">' + stars + '<span>(' + product.reviews + ')</span></div>' +
+                '<div class="price">$' + price + '</div>' +
+                '<button class="add-to-cart"' + (!inStock ? ' disabled' : '') + '>' +
+                    '<i class="fas fa-shopping-cart"></i> Add to Cart' +
+                '</button>' +
+            '</div>' +
+        '</div>';
+    }
+
+    generateRatingStars(rating) {
+        var fullStars = Math.floor(rating);
+        var hasHalfStar = rating % 1 >= 0.5;
+        var stars = "";
+
+        for (var i = 0; i < 5; i++) {
+            if (i < fullStars) {
+                stars += '<i class="fas fa-star"></i>';
+            } else if (i === fullStars && hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            } else {
+                stars += '<i class="far fa-star"></i>';
+            }
+        }
+        return stars;
+    }
+
+    updatePagination() {
+        if (!this.pagination) return;
+
+        var html = "";
+        var self = this;
+
+        if (this.currentPage > 1) {
+            html += '<button onclick="shopManager.goToPage(' + (this.currentPage - 1) + ')"><i class="fas fa-chevron-left"></i></button>';
+        }
+
+        for (var i = 1; i <= this.totalPages; i++) {
+            html += '<button class="' + (i === this.currentPage ? "active" : "") + '" onclick="shopManager.goToPage(' + i + ')">' + i + '</button>';
+        }
+
+        if (this.currentPage < this.totalPages) {
+            html += '<button onclick="shopManager.goToPage(' + (this.currentPage + 1) + ')"><i class="fas fa-chevron-right"></i></button>';
+        }
+
+        this.pagination.innerHTML = html;
+    }
+
+    goToPage(page) {
+        this.currentPage = page;
+        this.fetchProducts();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    handleViewChange(e) {
+        var button = e.currentTarget;
+        this.currentView = button.dataset.view;
+        this.viewOptions.forEach(function(option) { option.classList.remove("active"); });
+        button.classList.add("active");
+        this.renderProducts();
+    }
+
+    // ---- Add to Cart — Sends to PHP ----
+    async handleAddToCart(e) {
+        var bookCard = e.target.closest(".book-card");
+        var productId = bookCard.dataset.id;
+
+        if (!this.isLoggedIn) {
+            showToast("Please login to add items to cart!");
+            setTimeout(function() {
+                window.location.href = "login.html";
+            }, 1500);
+            return;
+        }
+
+        try {
+            var res = await fetch("../php/shop/add_to_cart.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ book_id: parseInt(productId) }),
+            });
+
+            var data = await res.json();
+
+            if (data.success) {
+                showToast(data.message);
+                var cartCount = document.querySelector(".cart-count");
+                if (cartCount) cartCount.textContent = data.cartCount;
+                await loadCartItems();
+            } else if (data.requireLogin) {
+                showToast("Please login first!");
+                setTimeout(function() {
+                    window.location.href = "login.html";
+                }, 1500);
+            } else {
+                showToast(data.message || "Failed to add to cart.");
+            }
+        } catch (err) {
+            showToast("Error connecting to server.");
+        }
+    }
+}
+
+// =============================================
+// CART MANAGEMENT — Database Backed
+// =============================================
+
+async function loadCartItems() {
+    try {
+        var res = await fetch("../php/shop/view_cart.php");
+        var data = await res.json();
+
+        var cartItems = document.querySelector(".cart-items");
+        var cartEmpty = document.querySelector(".cart-empty");
+        var cartCount = document.querySelector(".cart-count");
+        var totalAmount = document.querySelector(".total-amount");
+
+        if (!data.success || data.data.length === 0) {
+            if (cartEmpty) cartEmpty.style.display = "block";
+            if (cartItems) cartItems.innerHTML = "";
+            if (cartCount) cartCount.textContent = "0";
+            if (totalAmount) totalAmount.textContent = "$0.00";
+            return;
+        }
+
+        if (cartEmpty) cartEmpty.style.display = "none";
+        if (cartCount) cartCount.textContent = data.count;
+        if (totalAmount) totalAmount.textContent = "$" + data.total.toFixed(2);
+
+        if (cartItems) {
+            cartItems.innerHTML = data.data.map(function(item) {
+                return '<div class="cart-item" data-id="' + item.book_id + '">' +
+                    '<img src="' + item.image + '" alt="' + item.title + '" onerror="this.onerror=null;this.style.display=\'none\'">' +
+                    '<div class="cart-item-details">' +
+                        '<h4>' + item.title + '</h4>' +
+                        '<p>$' + parseFloat(item.price).toFixed(2) + '</p>' +
+                        '<div class="quantity-controls">' +
+                            '<button onclick="updateCartQuantity(' + item.book_id + ', -1)">-</button>' +
+                            '<span>' + item.quantity + '</span>' +
+                            '<button onclick="updateCartQuantity(' + item.book_id + ', 1)">+</button>' +
+                        '</div>' +
+                    '</div>' +
+                    '<button onclick="removeCartItem(' + item.book_id + ')" class="remove-item">' +
+                        '<i class="fas fa-times"></i>' +
+                    '</button>' +
+                '</div>';
+            }).join("");
+        }
+    } catch (e) {
+        console.error("Failed to load cart:", e);
+    }
+}
+
+async function updateCartQuantity(bookId, change) {
+    try {
+        var res = await fetch("../php/shop/update_cart.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ book_id: bookId, change: change }),
+        });
+        var data = await res.json();
+        if (data.success) await loadCartItems();
+    } catch (e) {
+        showToast("Failed to update cart.");
+    }
+}
+
+async function removeCartItem(bookId) {
+    try {
+        var res = await fetch("../php/shop/remove_from_cart.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ book_id: bookId }),
+        });
+        var data = await res.json();
+        if (data.success) {
+            showToast(data.message);
+            await loadCartItems();
+        }
+    } catch (e) {
+        showToast("Failed to remove item.");
+    }
+}
+
+// =============================================
+// DEBOUNCE
+// =============================================
+function debounce(func, wait) {
+    var timeout;
+    return function() {
+        var args = arguments;
+        var context = this;
+        clearTimeout(timeout);
+        timeout = setTimeout(function() { func.apply(context, args); }, wait);
+    };
+}
+
+// =============================================
+// TOAST
+// =============================================
+function showToast(message) {
+    var toastContainer = document.querySelector(".toast-container");
+    if (!toastContainer) {
+        toastContainer = document.createElement("div");
+        toastContainer.className = "toast-container";
+        toastContainer.style.cssText = "position:fixed;top:100px;right:20px;z-index:99999;";
+        document.body.appendChild(toastContainer);
+    }
+
+    var toast = document.createElement("div");
     toast.classList.add("toast");
-    toast.innerHTML = `
-        <i class="fas fa-check-circle"></i>
-        <span>${message}</span>
-    `;
-  
+    toast.style.cssText = "background:linear-gradient(135deg,#f3971b,#e08515);color:white;padding:15px 25px;border-radius:10px;margin-bottom:10px;display:flex;align-items:center;gap:10px;opacity:0;transform:translateX(100%);transition:all 0.3s ease;";
+    toast.innerHTML = '<i class="fas fa-check-circle"></i><span>' + message + '</span>';
     toastContainer.appendChild(toast);
-  
-    setTimeout(() => toast.classList.add("show"), 100);
-  
-    setTimeout(() => {
-      toast.classList.remove("show");
-      setTimeout(() => toastContainer.removeChild(toast), 300);
+
+    setTimeout(function() { toast.style.opacity = "1"; toast.style.transform = "translateX(0)"; }, 100);
+    setTimeout(function() {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateX(100%)";
+        setTimeout(function() { if (toast.parentElement) toastContainer.removeChild(toast); }, 300);
     }, 3000);
-  }
+}
+
+// =============================================
+// INITIALIZE
+// =============================================
+
+var shopManager;
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Initialize ShopManager only on shop page
+    if (document.getElementById("shop-grid")) {
+        shopManager = new ShopManager();
+    }
+
+    // Load cart on every page
+    loadCartItems();
+
+    // Cart toggle
+    var cartIcon = document.querySelector(".cart-icon");
+    var cartDropdown = document.querySelector(".cart-dropdown");
+    var closeCart = document.querySelector(".close-cart");
+    var isCartOpen = false;
+
+    if (cartIcon) {
+        cartIcon.addEventListener("click", function() {
+            isCartOpen = !isCartOpen;
+            cartDropdown.style.display = isCartOpen ? "block" : "none";
+        });
+    }
+
+    if (closeCart) {
+        closeCart.addEventListener("click", function() {
+            isCartOpen = false;
+            cartDropdown.style.display = "none";
+        });
+    }
+
+    document.addEventListener("click", function(e) {
+        if (!e.target.closest(".cart-wrapper") && isCartOpen) {
+            isCartOpen = false;
+            if (cartDropdown) cartDropdown.style.display = "none";
+        }
+    });
+
+    // Checkout button
+    var checkoutBtn = document.querySelector(".checkout-btn");
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener("click", function() {
+            window.location.href = "checkout.html";
+        });
+    }
+
+    // Header scroll
+    var header = document.querySelector(".main-header");
+    var lastScroll = 0;
+
+    window.addEventListener("scroll", function() {
+        var currentScroll = window.pageYOffset;
+        if (currentScroll <= 0) { header.classList.remove("scroll-up"); return; }
+        if (currentScroll > lastScroll && !header.classList.contains("scroll-down")) {
+            header.classList.remove("scroll-up");
+            header.classList.add("scroll-down");
+        } else if (currentScroll < lastScroll && header.classList.contains("scroll-down")) {
+            header.classList.remove("scroll-down");
+            header.classList.add("scroll-up");
+        }
+        lastScroll = currentScroll;
+    });
+
+    // Mobile menu
+    var mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
+    var navLinks = document.querySelector(".nav-links");
+
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener("click", function() {
+            navLinks.classList.toggle("active");
+            mobileMenuToggle.querySelector("i").classList.toggle("fa-bars");
+            mobileMenuToggle.querySelector("i").classList.toggle("fa-times");
+        });
+    }
+}); 

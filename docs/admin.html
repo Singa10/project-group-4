@@ -1,227 +1,531 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard - TechBooks</title>
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/admin.css" />
     <link rel="icon" type="image/png" href="../images/Copilot_20251218_104431.png">
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
-  <body>
+    <style>
+        .admin-section { display: none; }
+        .admin-section.active { display: block; }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .admin-table th, .admin-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #2a2a3e; color: #ccc; }
+        .admin-table th { color: #f3971b; font-weight: 600; }
+        .admin-table tr:hover { background: rgba(243, 151, 27, 0.05); }
+        .admin-table img { width: 50px; height: 60px; object-fit: cover; border-radius: 5px; }
+        .btn { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+        .btn-primary { background: #f3971b; color: white; }
+        .btn-danger { background: #ff4444; color: white; }
+        .btn-success { background: #4caf50; color: white; }
+        .btn-sm { padding: 5px 10px; font-size: 0.8rem; }
+        .btn:hover { opacity: 0.85; }
+        .admin-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+        .admin-search { padding: 10px 15px; border: 1px solid #333; border-radius: 8px; background: #16213e; color: white; width: 250px; }
+        .admin-search:focus { border-color: #f3971b; outline: none; }
+        .status-select { padding: 5px 10px; border: 1px solid #333; border-radius: 5px; background: #16213e; color: white; }
+        .admin-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; }
+        .admin-modal.active { display: flex; }
+        .modal-box { background: #1a1a2e; padding: 30px; border-radius: 15px; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; }
+        .modal-box h2 { color: #f3971b; margin-bottom: 20px; }
+        .modal-box .form-group { margin-bottom: 15px; }
+        .modal-box label { display: block; color: #ccc; margin-bottom: 5px; font-size: 0.9rem; }
+        .modal-box input, .modal-box select, .modal-box textarea { width: 100%; padding: 10px; border: 1px solid #333; border-radius: 8px; background: #16213e; color: white; font-size: 0.95rem; }
+        .modal-box textarea { min-height: 80px; resize: vertical; }
+        .modal-box input:focus, .modal-box select:focus, .modal-box textarea:focus { border-color: #f3971b; outline: none; }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .no-data { text-align: center; color: #aaa; padding: 40px; }
+        .loading { text-align: center; color: #f3971b; padding: 40px; }
+        .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; }
+        .status-pending { background: rgba(255,193,7,0.15); color: #ffc107; }
+        .status-processing { background: rgba(33,150,243,0.15); color: #2196f3; }
+        .status-shipped { background: rgba(156,39,176,0.15); color: #9c27b0; }
+        .status-completed { background: rgba(76,175,80,0.15); color: #4caf50; }
+        .status-cancelled { background: rgba(244,67,54,0.15); color: #f44336; }
+        .book-img-placeholder { width: 50px; height: 60px; background: #16213e; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #f3971b; font-size: 0.6rem; }
+    </style>
+</head>
+<body>
     <header class="main-header">
-      <nav class="nav-container">
-        <button class="mobile-toggle">
-          <i class="fas fa-bars"></i>
-        </button>
-        <div class="logo">
-          <i class="fas fa-book-reader"></i>
-          <span>TechBooks Admin</span>
-        </div>
-        <div class="admin-nav-right">
-          <div class="admin-notifications">
-            <i class="fas fa-bell"></i>
-            <span class="notification-badge">3</span>
-            <div class="notification-dropdown">
-              <div class="notification-item">
-                <p>New order #1234 received</p>
-                <span>2 minutes ago</span>
-              </div>
-              <div class="notification-item">
-                <p>Low stock alert: Clean Code</p>
-                <span>1 hour ago</span>
-              </div>
-              <div class="notification-item">
-                <p>New user registration</p>
-                <span>3 hours ago</span>
-              </div>
+        <nav class="nav-container">
+            <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+            <div class="logo"><i class="fas fa-book-reader"></i><span>TechBooks Admin</span></div>
+            <div class="admin-nav-right">
+                <div class="admin-notifications"><i class="fas fa-bell"></i><span class="notification-badge" id="notif-badge">0</span></div>
+                <div class="admin-profile">
+                    <span id="admin-name">Admin</span>
+                    <div class="profile-dropdown">
+                        <a href="../php/auth/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="admin-profile">
-            <img src="../images/abdisa.jpg" alt="Admin" />
-            <span>Seyfadin Abdela</span>
-            <div class="profile-dropdown">
-              <a href="admin-profile.html"
-                ><i class="fas fa-user"></i> Profile</a
-              >
-              <a href="admin-settings.html"
-                ><i class="fas fa-cog"></i> Settings</a
-              >
-              <a href="login.html"
-                ><i class="fas fa-sign-out-alt"></i> Logout</a
-              >
-            </div>
-          </div>
-        </div>
-      </nav>
+        </nav>
     </header>
 
     <div class="admin-container">
-      <aside class="admin-sidebar">
-        <div class="admin-menu">
-          <ul>
-            <li class="active">
-              <a href="admin-dashboard.html">
-                <i class="fas fa-tachometer-alt"></i>
-                <span>Dashboard</span>
-              </a>
-            </li>
-            <li>
-              <a href="admin-orders.html">
-                <i class="fas fa-shopping-cart"></i>
-                <span>Orders</span>
-              </a>
-            </li>
-            <li>
-              <a href="admin-users.html">
-                <i class="fas fa-users"></i>
-                <span>Users</span>
-              </a>
-            </li>
-            <li>
-              <a href="admin-books.html">
-                <i class="fas fa-book"></i>
-                <span>Books</span>
-              </a>
-            </li>
-            <li>
-              <a href="admin-categories.html">
-                <i class="fas fa-tags"></i>
-                <span>Categories</span>
-              </a>
-            </li>
-            <li>
-              <a href="admin-reports.html">
-                <i class="fas fa-chart-bar"></i>
-                <span>Reports</span>
-              </a>
-            </li>
-            <li>
-              <a href="admin-settings.html">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </aside>
-      <main class="admin-main">
-        <div class="welcome-section">
-          <h1>Welcome Back, John!</h1>
-          <p>Here's what's happening with your store today.</p>
-        </div>
-        <div class="dashboard-stats">
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="fas fa-shopping-cart"></i>
+        <aside class="admin-sidebar">
+            <div class="admin-menu">
+                <ul>
+                    <li class="active"><a href="#" data-section="dashboard"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li><a href="#" data-section="orders"><i class="fas fa-shopping-cart"></i><span>Orders</span></a></li>
+                    <li><a href="#" data-section="users"><i class="fas fa-users"></i><span>Users</span></a></li>
+                    <li><a href="#" data-section="books"><i class="fas fa-book"></i><span>Books</span></a></li>
+                    <li><a href="#" data-section="messages"><i class="fas fa-envelope"></i><span>Messages</span></a></li>
+                </ul>
             </div>
-            <div class="stat-details">
-              <h3>Total Orders</h3>
-              <p class="stat-number">1,234</p>
-              <span class="stat-change positive">
-                <i class="fas fa-arrow-up"></i> 12.5%
-              </span>
-            </div>
-          </div>
+        </aside>
 
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="fas fa-users"></i>
-            </div>
-            <div class="stat-details">
-              <h3>Total Users</h3>
-              <p class="stat-number">5,678</p>
-              <span class="stat-change positive">
-                <i class="fas fa-arrow-up"></i> 8.3%
-              </span>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="fas fa-dollar-sign"></i>
-            </div>
-            <div class="stat-details">
-              <h3>Revenue</h3>
-              <p class="stat-number">$12,345</p>
-              <span class="stat-change positive">
-                <i class="fas fa-arrow-up"></i> 15.7%
-              </span>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <div class="stat-icon">
-              <i class="fas fa-book"></i>
-            </div>
-            <div class="stat-details">
-              <h3>Total Books</h3>
-              <p class="stat-number">789</p>
-              <span class="stat-change positive">
-                <i class="fas fa-arrow-up"></i> 5.2%
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="dashboard-charts">
-          <div class="chart-container">
-            <h2>Sales Overview</h2>
-            <canvas id="salesChart"></canvas>
-          </div>
-          <div class="chart-container">
-            <h2>Top Categories</h2>
-            <canvas id="categoriesChart"></canvas>
-          </div>
-        </div>
-        <div class="recent-orders">
-          <div class="table-header">
-            <h2>Recent Orders</h2>
-            <a href="admin-orders.html" class="view-all-btn">View All</a>
-          </div>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Customer</th>
-                  <th>Product</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>#ORD-001</td>
-                  <td>John Smith</td>
-                  <td>Clean Code</td>
-                  <td>$49.99</td>
-                  <td>
-                    <span class="status-badge status-pending">Pending</span>
-                  </td>
-                  <td>
-                    <div class="action-btns">
-                      <button class="action-btn" title="View">
-                        <i class="fas fa-eye"></i>
-                      </button>
-                      <button class="action-btn" title="Edit">
-                        <i class="fas fa-edit"></i>
-                      </button>
+        <main class="admin-main">
+            <div class="admin-section active" id="section-dashboard">
+                <div class="welcome-section"><h1 id="welcome-msg">Welcome Back!</h1><p>Here's what's happening with your store today.</p></div>
+                <div class="dashboard-stats">
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-shopping-cart"></i></div><div class="stat-details"><h3>Total Orders</h3><p class="stat-number" id="stat-orders">0</p></div></div>
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-details"><h3>Total Users</h3><p class="stat-number" id="stat-users">0</p></div></div>
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-dollar-sign"></i></div><div class="stat-details"><h3>Revenue</h3><p class="stat-number" id="stat-revenue">$0</p></div></div>
+                    <div class="stat-card"><div class="stat-icon"><i class="fas fa-book"></i></div><div class="stat-details"><h3>Total Books</h3><p class="stat-number" id="stat-books">0</p></div></div>
+                </div>
+                <div class="dashboard-charts">
+                    <div class="chart-container"><h2>Sales Overview</h2><canvas id="salesChart"></canvas></div>
+                    <div class="chart-container"><h2>Books by Category</h2><canvas id="categoriesChart"></canvas></div>
+                </div>
+                <div class="recent-orders">
+                    <div class="table-header"><h2>Recent Orders</h2></div>
+                    <div class="table-container">
+                        <table class="admin-table"><thead><tr><th>Order ID</th><th>Customer</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+                        <tbody id="recent-orders-body"><tr><td colspan="5" class="loading">Loading...</td></tr></tbody></table>
                     </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </main>
+                </div>
+            </div>
+
+            <div class="admin-section" id="section-orders">
+                <h1>Manage Orders</h1>
+                <div class="admin-toolbar">
+                    <select class="status-select" id="order-status-filter"><option value="">All Statuses</option><option value="pending">Pending</option><option value="processing">Processing</option><option value="shipped">Shipped</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select>
+                </div>
+                <table class="admin-table"><thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+                <tbody id="orders-table-body"><tr><td colspan="7" class="loading">Loading...</td></tr></tbody></table>
+            </div>
+
+            <div class="admin-section" id="section-users">
+                <h1>Manage Users</h1>
+                <div class="admin-toolbar"><input type="text" class="admin-search" id="user-search" placeholder="Search users..." /></div>
+                <table class="admin-table"><thead><tr><th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>Orders</th><th>Total Spent</th><th>Joined</th><th>Actions</th></tr></thead>
+                <tbody id="users-table-body"><tr><td colspan="8" class="loading">Loading...</td></tr></tbody></table>
+            </div>
+
+            <div class="admin-section" id="section-books">
+                <h1>Manage Books</h1>
+                <div class="admin-toolbar">
+                    <input type="text" class="admin-search" id="book-search" placeholder="Search books..." />
+                    <button class="btn btn-primary" id="add-book-btn"><i class="fas fa-plus"></i> Add Book</button>
+                </div>
+                <table class="admin-table"><thead><tr><th>Image</th><th>Title</th><th>Author</th><th>Category</th><th>Price</th><th>Rating</th><th>Stock</th><th>Actions</th></tr></thead>
+                <tbody id="books-table-body"><tr><td colspan="8" class="loading">Loading...</td></tr></tbody></table>
+            </div>
+
+            <div class="admin-section" id="section-messages">
+                <h1>Contact Messages</h1>
+                <table class="admin-table"><thead><tr><th>Name</th><th>Email</th><th>Subject</th><th>Preview</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="messages-table-body"><tr><td colspan="7" class="loading">Loading...</td></tr></tbody></table>
+            </div>
+        </main>
     </div>
 
-    <script src="../js/admin.js"></script>
-  </body>
+    <div class="admin-modal" id="book-modal">
+        <div class="modal-box">
+            <h2 id="modal-title">Add New Book</h2>
+            <form id="book-form">
+                <input type="hidden" id="book-id" />
+                <div class="form-row"><div class="form-group"><label>Title *</label><input type="text" id="book-title" required /></div><div class="form-group"><label>Author *</label><input type="text" id="book-author" required /></div></div>
+                <div class="form-group"><label>Description</label><textarea id="book-description"></textarea></div>
+                <div class="form-row"><div class="form-group"><label>Price *</label><input type="number" id="book-price" step="0.01" min="0" required /></div><div class="form-group"><label>Category *</label><select id="book-category" required><option value="">Select Category</option></select></div></div>
+                <div class="form-row"><div class="form-group"><label>Rating</label><input type="number" id="book-rating" step="0.1" min="0" max="5" value="0" /></div><div class="form-group"><label>Reviews</label><input type="number" id="book-reviews" min="0" value="0" /></div></div>
+                <div class="form-group"><label>Image URL</label><input type="text" id="book-image" placeholder="https://..." /></div>
+                <div class="form-row"><div class="form-group"><label>Badge</label><input type="text" id="book-badge" placeholder="Bestseller, Classic..." /></div><div class="form-group"><label>In Stock</label><select id="book-stock"><option value="1">Yes</option><option value="0">No</option></select></div></div>
+                <div class="modal-actions"><button type="button" class="btn btn-danger" id="close-modal-btn">Cancel</button><button type="submit" class="btn btn-primary">Save Book</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="admin-modal" id="order-modal">
+        <div class="modal-box">
+            <h2 id="detail-modal-title">Details</h2>
+            <div id="order-detail-content"></div>
+            <div class="modal-actions"><button type="button" class="btn btn-danger" id="close-order-modal">Close</button></div>
+        </div>
+    </div>
+
+    <!-- ALL JS INLINE — No caching issues -->
+    <script>
+    (function() {
+        "use strict";
+
+        var allCategories = [];
+        var allMessages = [];
+        var adminBooks = [];
+        var salesChart = null;
+        var categoriesChart = null;
+
+        // ===== INIT =====
+        document.addEventListener("DOMContentLoaded", function() {
+            checkAuth();
+            setupNav();
+            setupOneTimeListeners();
+            loadDashboard();
+        });
+
+        // ===== AUTH =====
+        async function checkAuth() {
+            try {
+                var r = await fetch("../php/user/get_profile.php");
+                var d = await r.json();
+                if (!d.loggedIn || d.data.role !== "admin") { window.location.href = "login.html"; return; }
+                document.getElementById("admin-name").textContent = d.data.username;
+                document.getElementById("welcome-msg").textContent = "Welcome Back, " + d.data.username + "!";
+            } catch(e) { window.location.href = "login.html"; }
+        }
+
+        // ===== NAV =====
+        function setupNav() {
+            var items = document.querySelectorAll("[data-section]");
+            var sections = document.querySelectorAll(".admin-section");
+            items.forEach(function(item) {
+                item.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    var s = item.dataset.section;
+                    document.querySelectorAll(".admin-menu li").forEach(function(li) { li.classList.remove("active"); });
+                    item.parentElement.classList.add("active");
+                    sections.forEach(function(sec) { sec.classList.remove("active"); });
+                    document.getElementById("section-" + s).classList.add("active");
+                    if (s === "dashboard") loadDashboard();
+                    else if (s === "orders") loadOrders();
+                    else if (s === "users") loadUsers();
+                    else if (s === "books") loadBooks();
+                    else if (s === "messages") loadMessages();
+                });
+            });
+
+            var mt = document.querySelector(".mobile-toggle");
+            var sb = document.querySelector(".admin-sidebar");
+            if (mt) mt.addEventListener("click", function() { sb.classList.toggle("active"); });
+
+            var pb = document.querySelector(".admin-profile");
+            var pd = document.querySelector(".profile-dropdown");
+            if (pb) pb.addEventListener("click", function(e) { e.stopPropagation(); pd.classList.toggle("active"); });
+            document.addEventListener("click", function() { if (pd) pd.classList.remove("active"); });
+        }
+
+        // ===== ONE-TIME LISTENERS =====
+        function setupOneTimeListeners() {
+            var bs = document.getElementById("book-search");
+            if (bs) bs.addEventListener("input", debounce(function() { loadBooks(bs.value); }, 500));
+
+            var ab = document.getElementById("add-book-btn");
+            if (ab) ab.addEventListener("click", function() { openBookModal(); });
+
+            var us = document.getElementById("user-search");
+            if (us) us.addEventListener("input", debounce(function() { loadUsers(us.value); }, 500));
+
+            var sf = document.getElementById("order-status-filter");
+            if (sf) sf.addEventListener("change", function() { loadOrders(sf.value); });
+
+            var cm = document.getElementById("close-modal-btn");
+            if (cm) cm.addEventListener("click", function() { document.getElementById("book-modal").classList.remove("active"); });
+
+            var co = document.getElementById("close-order-modal");
+            if (co) co.addEventListener("click", function() { document.getElementById("order-modal").classList.remove("active"); });
+
+            var bf = document.getElementById("book-form");
+            if (bf) bf.addEventListener("submit", handleBookSubmit);
+        }
+
+        // ===== DASHBOARD =====
+        async function loadDashboard() {
+            try {
+                var r = await fetch("../php/admin/dashboard_stats.php");
+                var d = await r.json();
+                if (!d.success) { toast("Failed to load dashboard", "error"); return; }
+                var x = d.data;
+                document.getElementById("stat-orders").textContent = x.totalOrders.toLocaleString();
+                document.getElementById("stat-users").textContent = x.totalUsers.toLocaleString();
+                document.getElementById("stat-revenue").textContent = "$" + x.totalRevenue.toLocaleString();
+                document.getElementById("stat-books").textContent = x.totalBooks.toLocaleString();
+                document.getElementById("notif-badge").textContent = x.pendingOrders + x.unreadMessages;
+
+                var tb = document.getElementById("recent-orders-body");
+                if (x.recentOrders.length === 0) { tb.innerHTML = '<tr><td colspan="5" class="no-data">No orders yet</td></tr>'; }
+                else { tb.innerHTML = x.recentOrders.map(function(o) { return '<tr><td>#'+o.id+'</td><td>'+o.username+'</td><td>$'+parseFloat(o.total_amount).toFixed(2)+'</td><td><span class="status-badge status-'+o.status+'">'+o.status+'</span></td><td>'+new Date(o.created_at).toLocaleDateString()+'</td></tr>'; }).join(""); }
+
+                if (salesChart) salesChart.destroy();
+                var sc = document.getElementById("salesChart");
+                if (sc) {
+                    var sl = x.salesByMonth.length > 0 ? x.salesByMonth.map(function(s){return s.month;}) : ["No Data"];
+                    var sv = x.salesByMonth.length > 0 ? x.salesByMonth.map(function(s){return parseFloat(s.total);}) : [0];
+                    salesChart = new Chart(sc, { type:"line", data:{labels:sl,datasets:[{label:"Sales ($)",data:sv,borderColor:"#f3971b",backgroundColor:"rgba(243,151,27,0.1)",tension:0.4,fill:true}]}, options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,grid:{color:"rgba(255,255,255,0.1)"},ticks:{color:"#888"}},x:{grid:{color:"rgba(255,255,255,0.1)"},ticks:{color:"#888"}}}} });
+                }
+                if (categoriesChart) categoriesChart.destroy();
+                var cc = document.getElementById("categoriesChart");
+                if (cc) {
+                    var cl = x.booksByCategory.length > 0 ? x.booksByCategory.map(function(c){return c.name;}) : ["No Data"];
+                    var cv = x.booksByCategory.length > 0 ? x.booksByCategory.map(function(c){return c.count;}) : [0];
+                    categoriesChart = new Chart(cc, { type:"doughnut", data:{labels:cl,datasets:[{data:cv,backgroundColor:["#f3971b","#ff6b6b","#4caf50","#2196f3","#9c27b0","#ff9800","#00bcd4"]}]}, options:{responsive:true,plugins:{legend:{position:"bottom",labels:{color:"#888"}}}} });
+                }
+            } catch(e) { toast("Error loading dashboard", "error"); }
+        }
+
+        // ===== ORDERS =====
+        async function loadOrders(status) {
+            status = status || "";
+            var tb = document.getElementById("orders-table-body");
+            tb.innerHTML = '<tr><td colspan="7" class="loading">Loading...</td></tr>';
+            try {
+                var r = await fetch("../php/admin/manage_orders.php?status=" + status);
+                var d = await r.json();
+                if (!d.success || d.data.length === 0) { tb.innerHTML = '<tr><td colspan="7" class="no-data">No orders found</td></tr>'; return; }
+                tb.innerHTML = d.data.map(function(o) {
+                    return '<tr><td>#'+o.id+'</td><td>'+o.username+'<br><small style="color:#888">'+o.shipping_email+'</small></td><td>'+(o.items?o.items.length:0)+' items</td><td>$'+parseFloat(o.total_amount).toFixed(2)+'</td><td><select class="status-select" onchange="window._updateOrder('+o.id+',this.value)"><option value="pending"'+(o.status==="pending"?" selected":"")+'>Pending</option><option value="processing"'+(o.status==="processing"?" selected":"")+'>Processing</option><option value="shipped"'+(o.status==="shipped"?" selected":"")+'>Shipped</option><option value="completed"'+(o.status==="completed"?" selected":"")+'>Completed</option><option value="cancelled"'+(o.status==="cancelled"?" selected":"")+'>Cancelled</option></select></td><td>'+new Date(o.created_at).toLocaleDateString()+'</td><td><button class="btn btn-sm btn-primary" onclick="window._viewOrder('+o.id+')"><i class="fas fa-eye"></i></button></td></tr>';
+                }).join("");
+            } catch(e) { tb.innerHTML = '<tr><td colspan="7" class="no-data">Error loading orders</td></tr>'; }
+        }
+
+        window._updateOrder = async function(id, status) {
+            try {
+                var r = await fetch("../php/admin/update_order_status.php", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({order_id:id,status:status})});
+                var d = await r.json();
+                toast(d.message, d.success ? "success" : "error");
+            } catch(e) { toast("Failed to update", "error"); }
+        };
+
+        window._viewOrder = async function(id) {
+            try {
+                var r = await fetch("../php/admin/manage_orders.php");
+                var d = await r.json();
+                var order = null;
+                for (var i=0;i<d.data.length;i++) { if(d.data[i].id==id){order=d.data[i];break;} }
+                if (!order) return;
+                var items = "";
+                if (order.items) { for(var j=0;j<order.items.length;j++){var it=order.items[j]; items+='<div style="display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #333"><div><p style="margin:0">'+it.title+'</p><small>Qty: '+it.quantity+' x $'+parseFloat(it.price).toFixed(2)+'</small></div></div>';} }
+                document.getElementById("order-detail-content").innerHTML = '<div style="color:#ccc"><p><strong>Order:</strong> #'+order.id+'</p><p><strong>Customer:</strong> '+order.username+' ('+order.shipping_email+')</p><p><strong>Phone:</strong> '+order.shipping_phone+'</p><p><strong>Address:</strong> '+order.shipping_address+', '+order.shipping_city+' '+order.shipping_zip+'</p><p><strong>Status:</strong> <span class="status-badge status-'+order.status+'">'+order.status+'</span></p><hr style="border-color:#333;margin:15px 0"><h3 style="color:#f3971b">Items:</h3>'+items+'<hr style="border-color:#333;margin:15px 0"><p style="font-size:1.2rem;color:#f3971b"><strong>Total: $'+parseFloat(order.total_amount).toFixed(2)+'</strong></p></div>';
+                document.getElementById("detail-modal-title").textContent = "Order Details";
+                document.getElementById("order-modal").classList.add("active");
+            } catch(e) { toast("Failed to load order", "error"); }
+        };
+
+        // ===== USERS =====
+        async function loadUsers(search) {
+            search = search || "";
+            var tb = document.getElementById("users-table-body");
+            tb.innerHTML = '<tr><td colspan="8" class="loading">Loading...</td></tr>';
+            try {
+                var r = await fetch("../php/admin/manage_users.php?search=" + search);
+                var d = await r.json();
+                if (!d.success || d.data.length === 0) { tb.innerHTML = '<tr><td colspan="8" class="no-data">No users found</td></tr>'; return; }
+                tb.innerHTML = d.data.map(function(u) {
+                    var act = u.role!=="admin" ? '<button class="btn btn-sm btn-danger" onclick="window._delUser('+u.id+',\''+u.username+'\')"><i class="fas fa-trash"></i></button>' : '<span style="color:#888">Admin</span>';
+                    return '<tr><td>'+u.id+'</td><td>'+u.username+'</td><td>'+u.email+'</td><td><span class="status-badge status-'+(u.role==="admin"?"completed":"pending")+'">'+u.role+'</span></td><td>'+u.order_count+'</td><td>$'+u.total_spent.toFixed(2)+'</td><td>'+new Date(u.created_at).toLocaleDateString()+'</td><td>'+act+'</td></tr>';
+                }).join("");
+            } catch(e) { tb.innerHTML = '<tr><td colspan="8" class="no-data">Error loading users</td></tr>'; }
+        }
+
+        window._delUser = async function(id, name) {
+            if (!confirm('Delete user "'+name+'"?')) return;
+            try {
+                var r = await fetch("../php/admin/delete_user.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({user_id:id})});
+                var d = await r.json();
+                toast(d.message, d.success?"success":"error");
+                if (d.success) loadUsers();
+            } catch(e) { toast("Failed", "error"); }
+        };
+
+        // ===== BOOKS =====
+        async function loadBooks(search) {
+            search = search || "";
+            var tb = document.getElementById("books-table-body");
+            tb.innerHTML = '<tr><td colspan="8" class="loading">Loading...</td></tr>';
+            try {
+                var cr = await fetch("../php/books/get_categories.php");
+                var cd = await cr.json();
+                if (cd.success) allCategories = cd.data;
+
+                var r = await fetch("../php/admin/manage_books.php?search=" + search);
+                var d = await r.json();
+                if (!d.success || d.data.length === 0) { tb.innerHTML = '<tr><td colspan="8" class="no-data">No books found</td></tr>'; return; }
+
+                adminBooks = d.data;
+                var html = "";
+                for (var i=0; i<d.data.length; i++) {
+                    var b = d.data[i];
+                    html += '<tr>' +
+                        '<td><img src="' + b.image + '" alt="" style="width:50px;height:60px;object-fit:cover;border-radius:5px" onerror="this.onerror=null;this.src=\'\';this.alt=\'No img\'"></td>' +
+                        '<td>'+b.title+'</td>' +
+                        '<td>'+b.author+'</td>' +
+                        '<td>'+(b.category_name||"N/A")+'</td>' +
+                        '<td>$'+parseFloat(b.price).toFixed(2)+'</td>' +
+                        '<td>'+b.rating+'</td>' +
+                        '<td><span class="status-badge status-'+(b.in_stock?"completed":"cancelled")+'">'+(b.in_stock?"Yes":"No")+'</span></td>' +
+                        '<td>' +
+                            '<button class="btn btn-sm btn-primary" onclick="window._editBook('+b.id+')"><i class="fas fa-edit"></i></button> ' +
+                            '<button class="btn btn-sm btn-danger" onclick="window._delBook('+b.id+')"><i class="fas fa-trash"></i></button>' +
+                        '</td></tr>';
+                }
+                tb.innerHTML = html;
+            } catch(e) { tb.innerHTML = '<tr><td colspan="8" class="no-data">Error loading books</td></tr>'; }
+        }
+
+        window._editBook = function(id) {
+            for (var i=0;i<adminBooks.length;i++) { if(adminBooks[i].id==id){openBookModal(adminBooks[i]);return;} }
+        };
+
+        window._delBook = async function(id) {
+            var title = "";
+            for(var i=0;i<adminBooks.length;i++){if(adminBooks[i].id==id){title=adminBooks[i].title;break;}}
+            if (!confirm('Delete "'+(title||"this book")+'"?')) return;
+            try {
+                var r = await fetch("../php/admin/delete_book.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:id})});
+                var d = await r.json();
+                toast(d.message, d.success?"success":"error");
+                if (d.success) loadBooks();
+            } catch(e) { toast("Failed", "error"); }
+        };
+
+        function openBookModal(book) {
+            var cs = document.getElementById("book-category");
+            cs.innerHTML = '<option value="">Select Category</option>';
+            for(var i=0;i<allCategories.length;i++) cs.innerHTML += '<option value="'+allCategories[i].id+'">'+allCategories[i].name+'</option>';
+
+            if (book) {
+                document.getElementById("modal-title").textContent = "Edit Book";
+                document.getElementById("book-id").value = book.id;
+                document.getElementById("book-title").value = book.title;
+                document.getElementById("book-author").value = book.author;
+                document.getElementById("book-description").value = book.description||"";
+                document.getElementById("book-price").value = book.price;
+                document.getElementById("book-rating").value = book.rating;
+                document.getElementById("book-reviews").value = book.reviews;
+                document.getElementById("book-category").value = book.category_id||"";
+                document.getElementById("book-image").value = book.image||"";
+                document.getElementById("book-badge").value = book.badge||"";
+                document.getElementById("book-stock").value = book.in_stock;
+            } else {
+                document.getElementById("modal-title").textContent = "Add New Book";
+                document.getElementById("book-form").reset();
+                document.getElementById("book-id").value = "";
+            }
+            document.getElementById("book-modal").classList.add("active");
+        }
+
+        async function handleBookSubmit(e) {
+            e.preventDefault();
+            var bid = document.getElementById("book-id").value;
+            var data = {
+                id: bid?parseInt(bid):null,
+                title: document.getElementById("book-title").value,
+                author: document.getElementById("book-author").value,
+                description: document.getElementById("book-description").value,
+                price: parseFloat(document.getElementById("book-price").value),
+                rating: parseFloat(document.getElementById("book-rating").value)||0,
+                reviews: parseInt(document.getElementById("book-reviews").value)||0,
+                category_id: parseInt(document.getElementById("book-category").value),
+                image: document.getElementById("book-image").value,
+                badge: document.getElementById("book-badge").value,
+                in_stock: parseInt(document.getElementById("book-stock").value)
+            };
+            var url = bid ? "../php/admin/edit_book.php" : "../php/admin/add_book.php";
+            try {
+                var r = await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
+                var d = await r.json();
+                toast(d.message, d.success?"success":"error");
+                if (d.success) { document.getElementById("book-modal").classList.remove("active"); loadBooks(); }
+            } catch(e) { toast("Failed to save", "error"); }
+        }
+
+        // ===== MESSAGES =====
+        async function loadMessages() {
+            var tb = document.getElementById("messages-table-body");
+            tb.innerHTML = '<tr><td colspan="7" class="loading">Loading...</td></tr>';
+            try {
+                var r = await fetch("../php/admin/get_messages.php");
+                var d = await r.json();
+                if (!d.success || d.data.length === 0) { tb.innerHTML = '<tr><td colspan="7" class="no-data">No messages yet</td></tr>'; return; }
+                allMessages = d.data;
+                tb.innerHTML = d.data.map(function(m) {
+                    var short = m.message.length>40 ? m.message.substring(0,40)+"..." : m.message;
+                    var badge = m.is_read ? '<span class="status-badge status-completed">Read</span>' : '<span class="status-badge status-pending">Unread</span>';
+                    return '<tr style="'+(m.is_read?"":"background:rgba(243,151,27,0.05)")+'"><td>'+m.name+'</td><td>'+m.email+'</td><td>'+m.subject+'</td><td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+short+'</td><td>'+new Date(m.created_at).toLocaleDateString()+'</td><td>'+badge+'</td><td><button class="btn btn-sm btn-primary" onclick="window._viewMsg('+m.id+')"><i class="fas fa-eye"></i></button></td></tr>';
+                }).join("");
+            } catch(e) { tb.innerHTML = '<tr><td colspan="7" class="no-data">Error loading messages</td></tr>'; }
+        }
+
+        window._viewMsg = function(id) {
+            var msg = null;
+            for(var i=0;i<allMessages.length;i++){if(allMessages[i].id==id){msg=allMessages[i];break;}}
+            if(!msg){toast("Not found","error");return;}
+            document.getElementById("order-detail-content").innerHTML =
+                '<div style="color:#ccc">'+
+                '<div style="display:flex;justify-content:space-between;margin-bottom:20px"><span style="color:#888">'+new Date(msg.created_at).toLocaleString()+'</span><span class="status-badge '+(msg.is_read?'status-completed':'status-pending')+'">'+(msg.is_read?'Read':'Unread')+'</span></div>'+
+                '<div style="margin-bottom:15px"><label style="color:#888;font-size:0.8rem;display:block">From</label><p style="font-size:1.1rem;margin:0"><strong>'+msg.name+'</strong></p><p style="color:#f3971b;margin:0">'+msg.email+'</p></div>'+
+                '<div style="margin-bottom:15px"><label style="color:#888;font-size:0.8rem;display:block">Subject</label><p style="margin:0"><strong>'+msg.subject+'</strong></p></div>'+
+                '<hr style="border-color:#333;margin:15px 0">'+
+                '<div><label style="color:#888;font-size:0.8rem;display:block;margin-bottom:8px">Message</label><div style="background:#16213e;padding:20px;border-radius:10px;line-height:1.7;white-space:pre-wrap;word-wrap:break-word;max-height:400px;overflow-y:auto">'+msg.message+'</div></div>'+
+                '<hr style="border-color:#333;margin:15px 0">'+
+                '<div style="display:flex;gap:10px;flex-wrap:wrap">'+
+                '<button class="btn btn-primary" onclick="window.open(\'mailto:'+msg.email+'\')"><i class="fas fa-reply"></i> Reply</button>'+
+                (msg.is_read?'':'<button class="btn btn-success" onclick="window._markRead('+msg.id+')"><i class="fas fa-check"></i> Mark Read</button>')+
+                '</div></div>';
+            document.getElementById("detail-modal-title").textContent = "Message Details";
+            document.getElementById("order-modal").classList.add("active");
+        };
+
+        window._viewMsg = function(id) {
+    var msg = null;
+    for(var i=0;i<allMessages.length;i++){if(allMessages[i].id==id){msg=allMessages[i];break;}}
+    if(!msg){toast("Not found","error");return;}
+    document.getElementById("order-detail-content").innerHTML =
+        '<div style="color:#ccc">'+
+        '<div style="display:flex;justify-content:space-between;margin-bottom:20px"><span style="color:#888">'+new Date(msg.created_at).toLocaleString()+'</span><span class="status-badge '+(msg.is_read?'status-completed':'status-pending')+'">'+(msg.is_read?'Read':'Unread')+'</span></div>'+
+        '<div style="margin-bottom:15px"><label style="color:#888;font-size:0.8rem;display:block">From</label><p style="font-size:1.1rem;margin:0"><strong>'+msg.name+'</strong></p><p style="color:#f3971b;margin:0">'+msg.email+'</p></div>'+
+        '<div style="margin-bottom:15px"><label style="color:#888;font-size:0.8rem;display:block">Subject</label><p style="margin:0"><strong>'+msg.subject+'</strong></p></div>'+
+        '<hr style="border-color:#333;margin:15px 0">'+
+        '<div><label style="color:#888;font-size:0.8rem;display:block;margin-bottom:8px">Message</label><div style="background:#16213e;padding:20px;border-radius:10px;line-height:1.7;white-space:pre-wrap;word-wrap:break-word;max-height:400px;overflow-y:auto">'+msg.message+'</div></div>'+
+        '<hr style="border-color:#333;margin:15px 0">'+
+        '<div style="display:flex;gap:10px;flex-wrap:wrap">'+
+        '<button class="btn btn-primary" onclick="window._replyMsg(\''+msg.email+'\')"><i class="fas fa-reply"></i> Reply</button>'+
+        (msg.is_read?'':'<button class="btn btn-success" onclick="window._markRead('+msg.id+')"><i class="fas fa-check"></i> Mark Read</button>')+
+        '</div></div>';
+    document.getElementById("detail-modal-title").textContent = "Message Details";
+    document.getElementById("order-modal").classList.add("active");
+};
+
+window._replyMsg = function(email) {
+    var gmailUrl = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(email);
+    window.open(gmailUrl, "_blank");
+};
+
+        // ===== UTILS =====
+        function debounce(fn, wait) {
+            var t; return function() { var a=arguments,c=this; clearTimeout(t); t=setTimeout(function(){fn.apply(c,a);},wait); };
+        }
+
+        function toast(msg, type) {
+            type=type||"success";
+            var tc=document.getElementById("admin-toast-box");
+            if(!tc){tc=document.createElement("div");tc.id="admin-toast-box";tc.style.cssText="position:fixed;top:100px;right:20px;z-index:999999;";document.body.appendChild(tc);}
+            var t=document.createElement("div");
+            t.style.cssText="padding:12px 20px;border-radius:8px;margin-bottom:10px;display:flex;align-items:center;gap:8px;color:white;opacity:0;transform:translateX(100%);transition:all 0.3s ease;font-size:0.9rem;max-width:400px;box-shadow:0 5px 15px rgba(0,0,0,0.3);cursor:pointer;background:"+(type==="success"?"linear-gradient(135deg,#4caf50,#2e7d32)":"linear-gradient(135deg,#ff4444,#c62828)");
+            t.innerHTML='<i class="fas '+(type==="success"?"fa-check-circle":"fa-exclamation-circle")+'"></i><span>'+msg+'</span>';
+            t.onclick=function(){t.style.opacity="0";t.style.transform="translateX(100%)";setTimeout(function(){if(t.parentElement)t.remove();},300);};
+            tc.appendChild(t);
+            setTimeout(function(){t.style.opacity="1";t.style.transform="translateX(0)";},100);
+            setTimeout(function(){t.style.opacity="0";t.style.transform="translateX(100%)";setTimeout(function(){if(t.parentElement)t.remove();},300);},3000);
+        }
+
+    })();
+
+
+    </script>
+</body>
 </html>

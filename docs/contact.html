@@ -7,14 +7,8 @@
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/contact.css" />
     <link rel="icon" type="image/png" href="../images/Copilot_20251218_104431.png">
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
     <header class="main-header">
@@ -24,33 +18,19 @@
           <span>TechBooks</span>
         </div>
         <ul class="nav-links">
+          <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="shop.html"><i class="fas fa-shopping-bag"></i> Shop</a></li>
+          <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+          <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> Contact</a></li>
           <li>
-            <a href="../index.html" 
-              ><i class="fas fa-home"></i> Home</a
-            >
+            <select onchange="location=this.value;">
+              <option value="">Categories</option>
+              <option value="fiction.html">Fiction</option>
+              <option value="non-fiction.html">Non-Fiction</option>
+              <option value="science.html">Science & Tech</option>
+            </select>
           </li>
-          <li>
-            <a href="shop.html" ><i class="fas fa-shopping-bag"></i> Shop</a>
-          </li>
-          <li>
-            <a href="about.html" ><i class="fas fa-info-circle"></i> About</a>
-          </li>
-          <li>
-            <a href="contact.html"class="active"><i class="fas fa-envelope"></i> Contact</a>
-          </li>
-          <li>
-            <select name="" id="" onchange="location=this.value;">
-             <option value="">Categories</option>
-             <option value="fiction.html">Fiction</option>
-             <option value="non-fiction.html">Non-Fiction</option>
-             <option value="science.html">Science & Tech</option>
-             </select>
-           </li>
-          <li>
-            <a href="login.html" class="login-btn"
-              ><i class="fas fa-user"></i> Login</a
-            >
-          </li>
+          <li><a href="login.html" class="login-btn"><i class="fas fa-user"></i> Login</a></li>
         </ul>
         <div class="header-actions">
           <div class="cart-wrapper">
@@ -61,12 +41,9 @@
             <div class="cart-dropdown">
               <div class="cart-header">
                 <h3>Shopping Cart</h3>
-                <button class="close-cart">
-                  <i class="fas fa-times"></i>
-                </button>
+                <button class="close-cart"><i class="fas fa-times"></i></button>
               </div>
-              <div class="cart-items">
-              </div>
+              <div class="cart-items"></div>
               <div class="cart-empty">Your cart is empty</div>
               <div class="cart-footer">
                 <div class="cart-total">
@@ -77,15 +54,12 @@
               </div>
             </div>
           </div>
-          <button class="mobile-menu-toggle">
-            <i class="fas fa-bars"></i>
-          </button>
+          <button class="mobile-menu-toggle"><i class="fas fa-bars"></i></button>
         </div>
       </nav>
     </header>
 
     <main>
-     
       <section class="contact-hero">
         <div class="contact-hero-content">
           <h1>Get in Touch</h1>
@@ -93,7 +67,6 @@
         </div>
       </section>
 
-      
       <section class="contact-info-section">
         <div class="container">
           <div class="contact-grid">
@@ -120,36 +93,31 @@
                 <i class="fas fa-comments"></i>
                 <h3>Live Chat</h3>
                 <p>Available 24/7</p>
-                <button class="chat-btn">Start Chat</button>
+                <button class="chat-btn" id="open-chat-btn">Start Chat</button>
               </div>
             </div>
 
-          
             <div class="contact-form-container">
               <h2>Send us a Message</h2>
-              <form id="contact-form" class="contact-form" action="https://formspree.io/f/xgowbjnz" method="post">
+              <!-- NO action/method — JavaScript handles submission -->
+              <form id="contact-form" class="contact-form">
                 <div class="form-group">
                   <label for="name">Full Name</label>
-                  <input type="text" id="name" name="name" required />
+                  <input type="text" id="name" name="name" required minlength="2" maxlength="100" />
                 </div>
                 <div class="form-group">
                   <label for="email">Email Address</label>
-                  <input type="email" id="email" name="email" required />
+                  <input type="email" id="email" name="email" required maxlength="100" />
                 </div>
                 <div class="form-group">
                   <label for="subject">Subject</label>
-                  <input type="text" id="subject" name="subject" required />
+                  <input type="text" id="subject" name="subject" required minlength="3" maxlength="255" />
                 </div>
                 <div class="form-group">
                   <label for="message">Message</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="6"
-                    required
-                  ></textarea>
+                  <textarea id="message" name="message" rows="6" required minlength="10" maxlength="2000"></textarea>
                 </div>
-                <button type="submit" class="submit-btn">
+                <button type="submit" class="submit-btn" id="contact-submit-btn">
                   <i class="fas fa-paper-plane"></i> Send Message
                 </button>
               </form>
@@ -158,7 +126,6 @@
         </div>
       </section>
 
- 
       <section class="faq-section">
         <div class="container">
           <h2>Frequently Asked Questions</h2>
@@ -169,30 +136,25 @@
                 <i class="fas fa-chevron-down"></i>
               </div>
               <div class="faq-answer">
-                <p>
-                  You can track your order by logging into your account and
-                  visiting the "Orders" section, or by using the tracking number
-                  provided in your shipping confirmation email.
-                </p>
+                <p>You can track your order by logging into your account and visiting the "Orders" section.</p>
               </div>
             </div>
-           
           </div>
         </div>
       </section>
 
-     
       <section class="newsletter">
         <div class="newsletter-content">
           <i class="fas fa-envelope-open-text newsletter-icon"></i>
           <h2>Stay Updated</h2>
           <p>Get notified about new releases and exclusive deals</p>
+          <!-- NO action/method — JavaScript handles submission -->
           <form id="newsletter-form" class="newsletter-form">
             <div class="input-group">
               <i class="fas fa-envelope"></i>
-              <input type="email" placeholder="Enter your email" required />
+              <input type="email" name="email" id="newsletter-email" placeholder="Enter your email" required maxlength="100" />
             </div>
-            <button type="submit">
+            <button type="submit" id="newsletter-submit-btn">
               <span>Subscribe</span>
               <i class="fas fa-arrow-right"></i>
             </button>
@@ -201,14 +163,11 @@
       </section>
     </main>
 
-    
     <footer class="main-footer">
       <div class="footer-content">
         <div class="footer-section">
           <h3>About Us</h3>
-          <p>
-            Your trusted source for any top sold books.
-          </p>
+          <p>Your trusted source for any top sold books.</p>
         </div>
         <div class="footer-section">
           <h3>Quick Links</h3>
@@ -234,24 +193,233 @@
       </div>
     </footer>
 
-   
     <div class="chat-widget" id="chat-widget">
       <div class="chat-header">
         <h3>Live Chat</h3>
-        <button class="close-chat"><i class="fas fa-times"></i></button>
+        <button class="close-chat" id="close-chat-btn"><i class="fas fa-times"></i></button>
       </div>
-      <div class="chat-messages">
-        <div class="message system">
-          Welcome to TechBooks support! How can we help you today?
-        </div>
+      <div class="chat-messages" id="chat-messages">
+        <div class="message system">Welcome to TechBooks support! How can we help you today?</div>
       </div>
       <div class="chat-input">
-        <input type="text" placeholder="Type your message..." />
-        <button><i class="fas fa-paper-plane"></i></button>
+        <input type="text" id="chat-input-field" placeholder="Type your message..." />
+        <button id="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
       </div>
     </div>
 
-    <script src="../js/contact.js"></script>
-    <script src="../js/shop.js"></script>
+    <!-- Toast container -->
+    <div id="fixed-toast-box" style="position:fixed;top:100px;right:20px;z-index:999999;"></div>
+
+    <!-- Auth check for navbar -->
+    <script src="../js/auth-check.js"></script>
+
+    <!-- ALL CONTACT PAGE JS — INLINE (no caching issues) -->
+    <script>
+    // =============================================
+    // CONTACT FORM — AJAX
+    // =============================================
+    (function() {
+        var contactForm = document.getElementById("contact-form");
+        if (contactForm) {
+            console.log("✅ Contact form found");
+            
+            contactForm.addEventListener("submit", function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log("✅ Contact form submitted via JS");
+
+                var submitBtn = document.getElementById("contact-submit-btn");
+                var originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                submitBtn.disabled = true;
+
+                var formData = {
+                    name: document.getElementById("name").value,
+                    email: document.getElementById("email").value,
+                    subject: document.getElementById("subject").value,
+                    message: document.getElementById("message").value
+                };
+
+                console.log("📧 Sending:", formData);
+
+                fetch("../php/contact/send_message.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formData)
+                })
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    console.log("📨 Response:", data);
+                    if (data.success) {
+                        showToastMsg(data.message, "success");
+                        contactForm.reset();
+                    } else {
+                        showToastMsg(data.message || "Failed to send.", "error");
+                    }
+                })
+                .catch(function(err) {
+                    console.error("❌ Error:", err);
+                    showToastMsg("Error connecting to server.", "error");
+                })
+                .finally(function() {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
+
+                return false;
+            });
+        } else {
+            console.log("❌ Contact form NOT found");
+        }
+
+        // =============================================
+        // NEWSLETTER FORM — AJAX
+        // =============================================
+        var newsletterForm = document.getElementById("newsletter-form");
+        if (newsletterForm) {
+            console.log("✅ Newsletter form found");
+
+            newsletterForm.addEventListener("submit", function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log("✅ Newsletter form submitted via JS");
+
+                var submitBtn = document.getElementById("newsletter-submit-btn");
+                var originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                submitBtn.disabled = true;
+
+                var email = document.getElementById("newsletter-email").value;
+
+                console.log("📧 Subscribing:", email);
+
+                fetch("../php/contact/newsletter.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email: email })
+                })
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    console.log("📨 Response:", data);
+                    if (data.success) {
+                        showToastMsg(data.message, "success");
+                        newsletterForm.reset();
+                    } else {
+                        showToastMsg(data.message || "Failed.", "error");
+                    }
+                })
+                .catch(function(err) {
+                    console.error("❌ Error:", err);
+                    showToastMsg("Error connecting to server.", "error");
+                })
+                .finally(function() {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
+
+                return false;
+            });
+        } else {
+            console.log("❌ Newsletter form NOT found");
+        }
+
+        // =============================================
+        // FAQ TOGGLE
+        // =============================================
+        var faqItems = document.querySelectorAll(".faq-item");
+        faqItems.forEach(function(item) {
+            item.addEventListener("click", function() {
+                faqItems.forEach(function(other) {
+                    if (other !== item) other.classList.remove("active");
+                });
+                item.classList.toggle("active");
+            });
+        });
+
+        // =============================================
+        // CHAT WIDGET
+        // =============================================
+        var chatBtn = document.getElementById("open-chat-btn");
+        var chatWidget = document.getElementById("chat-widget");
+        var closeChat = document.getElementById("close-chat-btn");
+        var chatInput = document.getElementById("chat-input-field");
+        var chatSend = document.getElementById("chat-send-btn");
+        var chatMessages = document.getElementById("chat-messages");
+
+        if (chatBtn) {
+            chatBtn.addEventListener("click", function() {
+                chatWidget.classList.add("active");
+            });
+        }
+        if (closeChat) {
+            closeChat.addEventListener("click", function() {
+                chatWidget.classList.remove("active");
+            });
+        }
+
+        function sendChatMsg(msg) {
+            var el = document.createElement("div");
+            el.className = "message user";
+            el.textContent = msg;
+            chatMessages.appendChild(el);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            setTimeout(function() {
+                var reply = document.createElement("div");
+                reply.className = "message system";
+                reply.textContent = "Thank you! Our team will assist you shortly.";
+                chatMessages.appendChild(reply);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+        }
+
+        if (chatSend) {
+            chatSend.addEventListener("click", function() {
+                var msg = chatInput.value.trim();
+                if (msg) { sendChatMsg(msg); chatInput.value = ""; }
+            });
+        }
+        if (chatInput) {
+            chatInput.addEventListener("keypress", function(e) {
+                if (e.key === "Enter") {
+                    var msg = chatInput.value.trim();
+                    if (msg) { sendChatMsg(msg); chatInput.value = ""; }
+                }
+            });
+        }
+
+        // =============================================
+        // TOAST — Fixed at Top Right
+        // =============================================
+        window.showToastMsg = function(message, type) {
+            var container = document.getElementById("fixed-toast-box");
+
+            var toast = document.createElement("div");
+            toast.style.cssText = "padding:15px 25px;border-radius:10px;display:flex;align-items:center;gap:10px;margin-bottom:10px;font-family:Poppins,Arial,sans-serif;font-size:0.95rem;max-width:420px;box-shadow:0 5px 20px rgba(0,0,0,0.4);color:white;cursor:pointer;opacity:0;transform:translateX(100%);transition:all 0.4s ease;background:" + (type === "success" ? "linear-gradient(135deg,#4caf50,#2e7d32)" : "linear-gradient(135deg,#ff4444,#c62828)");
+
+            toast.innerHTML = '<i class="fas ' + (type === "success" ? "fa-check-circle" : "fa-exclamation-circle") + '"></i><span>' + message + '</span>';
+
+            toast.addEventListener("click", function() {
+                toast.style.opacity = "0";
+                toast.style.transform = "translateX(100%)";
+                setTimeout(function() { toast.remove(); }, 400);
+            });
+
+            container.appendChild(toast);
+
+            setTimeout(function() {
+                toast.style.opacity = "1";
+                toast.style.transform = "translateX(0)";
+            }, 100);
+
+            setTimeout(function() {
+                toast.style.opacity = "0";
+                toast.style.transform = "translateX(100%)";
+                setTimeout(function() { if(toast.parentElement) toast.remove(); }, 400);
+            }, 5000);
+        };
+
+    })();
+    </script>
   </body>
 </html>
