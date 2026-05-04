@@ -27,26 +27,17 @@
         .form-group input { width: 100%; padding: 12px; border: 1px solid #333; border-radius: 8px; background: #16213e; color: white; font-size: 1rem; }
         .form-group input:focus { border-color: #f3971b; outline: none; }
 
-        /* Payment Methods */
         .payment-methods { display: flex; flex-direction: column; gap: 12px; margin: 20px 0; }
-        .payment-option {
-            display: flex; align-items: center; gap: 15px; padding: 15px 20px;
-            border: 2px solid #333; border-radius: 10px; cursor: pointer; transition: all 0.3s;
-        }
+        .payment-option { display: flex; align-items: center; gap: 15px; padding: 15px 20px; border: 2px solid #333; border-radius: 10px; cursor: pointer; transition: all 0.3s; }
         .payment-option:hover { border-color: #f3971b; }
         .payment-option.selected { border-color: #f3971b; background: rgba(243,151,27,0.1); }
         .payment-option input[type="radio"] { display: none; }
-        .payment-icon { width: 50px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 5px; font-weight: 700; font-size: 0.7rem; }
-        .payment-icon.paypal { background: #003087; color: white; }
-        .payment-icon.telebirr { background: #00a651; color: white; }
-        .payment-icon.cbe { background: #1a3c6e; color: white; }
         .payment-label { flex: 1; }
         .payment-label h4 { color: white; margin-bottom: 2px; }
         .payment-label p { color: #888; font-size: 0.8rem; }
         .payment-check { color: #f3971b; font-size: 1.2rem; display: none; }
         .payment-option.selected .payment-check { display: block; }
 
-        /* Payment Details */
         .payment-details { display: none; margin-top: 15px; padding: 20px; background: #16213e; border-radius: 10px; }
         .payment-details.active { display: block; }
         .payment-details h3 { color: #f3971b; margin-bottom: 15px; font-size: 1rem; }
@@ -54,7 +45,6 @@
         .payment-details .highlight { color: #f3971b; font-weight: 600; }
         .payment-details .info-box { background: #1a1a2e; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 3px solid #f3971b; }
 
-        /* Order Summary */
         .order-summary { height: fit-content; position: sticky; top: 100px; }
         .order-items { max-height: 300px; overflow-y: auto; margin-bottom: 20px; }
         .order-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid #333; align-items: center; }
@@ -65,15 +55,10 @@
         .total-row { display: flex; justify-content: space-between; margin-bottom: 10px; color: #ccc; }
         .total-row.grand-total { color: #f3971b; font-size: 1.2rem; font-weight: 700; }
 
-        .place-order-btn {
-            width: 100%; padding: 15px; background: #f3971b; color: white;
-            border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600;
-            cursor: pointer; margin-top: 15px; transition: background 0.3s;
-        }
+        .place-order-btn { width: 100%; padding: 15px; background: #f3971b; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; margin-top: 15px; transition: background 0.3s; font-family: 'Poppins', sans-serif; }
         .place-order-btn:hover { background: #e08515; }
         .place-order-btn:disabled { background: #555; cursor: not-allowed; }
 
-        /* Steps */
         .checkout-steps { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; }
         .step { display: flex; align-items: center; gap: 8px; color: #555; }
         .step.active { color: #f3971b; }
@@ -82,15 +67,17 @@
         .step.active .step-num { background: #f3971b; color: white; border-color: #f3971b; }
         .step.done .step-num { background: #4caf50; color: white; border-color: #4caf50; }
 
-        /* Success */
-        .order-success { display: none; text-align: center; padding: 60px 20px; max-width: 500px; margin: 120px auto; }
-        .order-success i { font-size: 4rem; color: #4caf50; margin-bottom: 20px; }
-        .order-success h2 { color: white; margin-bottom: 10px; }
-        .order-success p { color: #aaa; margin-bottom: 5px; }
+        /* ---- FIX #1: Order Received Section ---- */
+        .order-success { display: none; text-align: center; padding: 60px 20px; max-width: 600px; margin: 120px auto; }
+        .order-success .clock-icon { font-size: 4rem; color: #f3971b; margin-bottom: 20px; }
+        .order-success h2 { color: white; margin-bottom: 10px; font-size: 1.8rem; }
         .order-success .order-id { color: #f3971b; font-weight: 700; font-size: 1.2rem; }
         .order-success .txn-id { color: #4caf50; font-size: 0.9rem; }
-
-        .continue-btn { display: inline-block; margin-top: 20px; padding: 12px 30px; background: #f3971b; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; }
+        .waiting-box { background: rgba(243,151,27,0.1); border: 1px solid #f3971b; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: left; }
+        .waiting-box h4 { color: #f3971b; margin-bottom: 12px; }
+        .waiting-box p { color: #ccc; font-size: 0.9rem; margin-bottom: 8px; }
+        .waiting-box p:last-child { margin-bottom: 0; }
+        .continue-btn { display: inline-block; margin-top: 20px; padding: 12px 30px; background: #f3971b; color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-family: 'Poppins', sans-serif; }
 
         @media (max-width: 768px) {
             .checkout-container { grid-template-columns: 1fr; margin-top: 100px; }
@@ -112,7 +99,6 @@
         </nav>
     </header>
 
-    <!-- Steps -->
     <div class="checkout-steps" id="checkout-steps">
         <div class="step active" id="step1"><span class="step-num">1</span><span>Shipping</span></div>
         <div class="step" id="step2"><span class="step-num">2</span><span>Payment</span></div>
@@ -120,7 +106,6 @@
     </div>
 
     <div class="checkout-container" id="checkout-page">
-        <!-- Left Side -->
         <div>
             <!-- Shipping Form -->
             <div class="section-box" id="shipping-section">
@@ -148,39 +133,24 @@
                     <!-- PayPal -->
                     <label class="payment-option" onclick="selectPayment('paypal')">
                         <input type="radio" name="payment" value="paypal" />
-                        <img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png" 
-                             alt="PayPal" 
-                             style="width:80px;height:auto;object-fit:contain">
-                        <div class="payment-label">
-                            <h4>PayPal</h4>
-                            <p>Pay with your PayPal account</p>
-                        </div>
+                        <img src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png" alt="PayPal" style="width:80px;height:auto;object-fit:contain">
+                        <div class="payment-label"><h4>PayPal</h4><p>Pay with your PayPal account</p></div>
                         <i class="fas fa-check-circle payment-check"></i>
                     </label>
-                
+
                     <!-- Telebirr -->
                     <label class="payment-option" onclick="selectPayment('telebirr')">
                         <input type="radio" name="payment" value="telebirr" />
-                        <img src="../images/telebirr Logo PNG format (1).png" 
-                             alt="Telebirr" 
-                             style="width:45px;height:45px;object-fit:contain;border-radius:10px">
-                        <div class="payment-label">
-                            <h4>Telebirr</h4>
-                            <p>Pay with Telebirr mobile money</p>
-                        </div>
+                        <img src="https://play-lh.googleusercontent.com/UNZPB8x3-FXBF7Hs3PJvFoYJOQxkVL_wS2BQnfKAnGHJDOABWneBMhL9_sPJPkqrA=w240-h480-rw" alt="Telebirr" style="width:45px;height:45px;object-fit:contain;border-radius:10px">
+                        <div class="payment-label"><h4>Telebirr</h4><p>Pay with Telebirr mobile money</p></div>
                         <i class="fas fa-check-circle payment-check"></i>
                     </label>
-                
+
                     <!-- CBE -->
                     <label class="payment-option" onclick="selectPayment('cbe')">
                         <input type="radio" name="payment" value="cbe" />
-                        <img src="../images/Commercial Bank of Ethiopia Logo - Copy.png" 
-                             alt="CBE" 
-                             style="width:45px;height:45px;object-fit:contain;border-radius:10px">
-                        <div class="payment-label">
-                            <h4>Commercial Bank of Ethiopia</h4>
-                            <p>Pay via CBE bank transfer</p>
-                        </div>
+                        <img src="https://play-lh.googleusercontent.com/N29nmhQVBCGjcnfbMbOOYZ0TtYFoHOEGqBgIfYV7iqxfuczXVIZ0h6LLIbFV1zNYCQ=w240-h480-rw" alt="CBE" style="width:45px;height:45px;object-fit:contain;border-radius:10px">
+                        <div class="payment-label"><h4>Commercial Bank of Ethiopia</h4><p>Pay via CBE bank transfer</p></div>
                         <i class="fas fa-check-circle payment-check"></i>
                     </label>
                 </div>
@@ -193,9 +163,7 @@
                         <p>Amount: <span class="highlight" id="paypal-amount">$0.00</span></p>
                         <p>PayPal Email: <span class="highlight">payments@techbooks.com</span></p>
                     </div>
-                    <button class="place-order-btn" onclick="processPayment('paypal')">
-                        <i class="fab fa-paypal"></i> Pay with PayPal
-                    </button>
+                    <button class="place-order-btn" onclick="processPayment('paypal')"><i class="fab fa-paypal"></i> Pay with PayPal</button>
                 </div>
 
                 <!-- Telebirr Details -->
@@ -209,11 +177,9 @@
                     </div>
                     <div class="form-group" style="margin-top:15px">
                         <label style="color:#ccc">Enter Telebirr Transaction ID *</label>
-                        <input type="text" id="telebirr-txn" placeholder="e.g. TB123456789" style="width:100%;padding:12px;border:1px solid #333;border-radius:8px;background:#1a1a2e;color:white" />
+                        <input type="text" id="telebirr-txn" placeholder="e.g. TB123456789" style="width:100%;padding:12px;border:1px solid #333;border-radius:8px;background:#1a1a2e;color:white;font-family:'Poppins',sans-serif" />
                     </div>
-                    <button class="place-order-btn" onclick="processPayment('telebirr')">
-                        <i class="fas fa-check"></i> Confirm Telebirr Payment
-                    </button>
+                    <button class="place-order-btn" onclick="processPayment('telebirr')"><i class="fas fa-check"></i> Confirm Telebirr Payment</button>
                 </div>
 
                 <!-- CBE Details -->
@@ -228,20 +194,16 @@
                     </div>
                     <div class="form-group" style="margin-top:15px">
                         <label style="color:#ccc">Enter CBE Transaction Reference *</label>
-                        <input type="text" id="cbe-txn" placeholder="e.g. FT24001234567" style="width:100%;padding:12px;border:1px solid #333;border-radius:8px;background:#1a1a2e;color:white" />
+                        <input type="text" id="cbe-txn" placeholder="e.g. FT24001234567" style="width:100%;padding:12px;border:1px solid #333;border-radius:8px;background:#1a1a2e;color:white;font-family:'Poppins',sans-serif" />
                     </div>
-                    <button class="place-order-btn" onclick="processPayment('cbe')">
-                        <i class="fas fa-check"></i> Confirm CBE Payment
-                    </button>
+                    <button class="place-order-btn" onclick="processPayment('cbe')"><i class="fas fa-check"></i> Confirm CBE Payment</button>
                 </div>
 
-                <button class="place-order-btn" style="background:#555;margin-top:10px" onclick="backToShipping()">
-                    <i class="fas fa-arrow-left"></i> Back to Shipping
-                </button>
+                <button class="place-order-btn" style="background:#555;margin-top:10px" onclick="backToShipping()"><i class="fas fa-arrow-left"></i> Back to Shipping</button>
             </div>
         </div>
 
-        <!-- Right Side — Order Summary -->
+        <!-- Order Summary -->
         <div class="section-box order-summary">
             <h2><i class="fas fa-receipt"></i> Order Summary</h2>
             <div class="order-items" id="order-items"><p style="color:#aaa">Loading...</p></div>
@@ -253,19 +215,29 @@
         </div>
     </div>
 
-    <!-- Success Message -->
+    <!-- ===== FIX #1: Order Received (not Payment Successful) ===== -->
     <div class="order-success" id="order-success">
-        <i class="fas fa-check-circle"></i>
-        <h2>Payment Successful!</h2>
+        <i class="fas fa-clock clock-icon"></i>
+        <h2>Order Received!</h2>
+        <p style="color:#f3971b;font-size:1.1rem;font-weight:600;margin-bottom:15px">
+            Please wait while we confirm your payment.
+        </p>
         <p>Your order ID: <span class="order-id" id="success-order-id">#0000</span></p>
         <p>Transaction ID: <span class="txn-id" id="success-txn-id"></span></p>
         <p>Payment Method: <span class="txn-id" id="success-method"></span></p>
-        <p style="margin-top:10px">We'll send a confirmation to your email.</p>
+
+        <div class="waiting-box">
+            <h4><i class="fas fa-info-circle"></i> What happens next?</h4>
+            <p>1. Our team will verify your payment within 24 hours.</p>
+            <p>2. You will receive a confirmation email once verified.</p>
+            <p>3. Your order status will be updated in your account.</p>
+        </div>
+
+        <p style="color:#aaa;font-size:0.85rem">A notification has been sent to your email address.</p>
         <a href="shop.html" class="continue-btn">Continue Shopping</a>
     </div>
 
     <div id="fixed-toast-box" style="position:fixed;top:100px;right:20px;z-index:999999;"></div>
-
     <script src="../js/auth-check.js"></script>
     <script>
     (function() {
@@ -278,7 +250,6 @@
             document.getElementById("shipping-form").addEventListener("submit", handleShipping);
         });
 
-        // ===== LOAD CART =====
         async function loadOrderSummary() {
             try {
                 var r = await fetch("../php/shop/view_cart.php");
@@ -296,7 +267,6 @@
             } catch(e) { document.getElementById("order-items").innerHTML = '<p style="color:#ff4444">Error loading cart.</p>'; }
         }
 
-        // ===== SHIPPING SUBMIT =====
         async function handleShipping(e) {
             e.preventDefault();
             var btn = e.target.querySelector("button");
@@ -323,20 +293,13 @@
                 if (d.success) {
                     currentOrderId = d.orderId;
                     currentTotal = d.total;
-
-                    // Update amounts in payment sections
                     document.getElementById("paypal-amount").textContent = "$" + currentTotal.toFixed(2);
                     document.getElementById("telebirr-amount").textContent = "$" + currentTotal.toFixed(2);
                     document.getElementById("cbe-amount").textContent = "$" + currentTotal.toFixed(2);
-
-                    // Show payment section
                     document.getElementById("shipping-section").style.display = "none";
                     document.getElementById("payment-section").style.display = "block";
-
-                    // Update steps
                     document.getElementById("step1").className = "step done";
                     document.getElementById("step2").className = "step active";
-
                     showToast("Order created! Choose payment method.", "success");
                 } else {
                     showToast(d.message || "Failed to create order.", "error");
@@ -350,30 +313,20 @@
             }
         }
 
-        // ===== SELECT PAYMENT =====
         window.selectPayment = function(method) {
             selectedPayment = method;
-
-            // Update UI
             document.querySelectorAll(".payment-option").forEach(function(opt) { opt.classList.remove("selected"); });
             document.querySelectorAll(".payment-details").forEach(function(det) { det.classList.remove("active"); });
-
             var selected = document.querySelector('input[value="'+method+'"]');
-            if (selected) {
-                selected.checked = true;
-                selected.closest(".payment-option").classList.add("selected");
-            }
+            if (selected) { selected.checked = true; selected.closest(".payment-option").classList.add("selected"); }
             var details = document.getElementById(method + "-details");
             if (details) details.classList.add("active");
         };
 
-        // ===== PROCESS PAYMENT =====
         window.processPayment = async function(method) {
             if (!currentOrderId) { showToast("No order found.", "error"); return; }
 
             var transactionId = "";
-
-            // Validate transaction ID for Telebirr and CBE
             if (method === "telebirr") {
                 transactionId = document.getElementById("telebirr-txn").value.trim();
                 if (!transactionId) { showToast("Please enter Telebirr Transaction ID.", "error"); return; }
@@ -382,13 +335,11 @@
                 if (!transactionId) { showToast("Please enter CBE Transaction Reference.", "error"); return; }
             }
 
-            // Disable all payment buttons
             document.querySelectorAll(".payment-details .place-order-btn").forEach(function(b) {
                 b.disabled = true;
                 b.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             });
 
-            // Simulate PayPal redirect delay
             if (method === "paypal") {
                 showToast("Connecting to PayPal...", "success");
                 await new Promise(function(resolve) { setTimeout(resolve, 2000); });
@@ -398,40 +349,32 @@
                 var r = await fetch("../php/shop/process_payment.php", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        order_id: currentOrderId,
-                        payment_method: method,
-                        transaction_id: transactionId
-                    })
+                    body: JSON.stringify({ order_id: currentOrderId, payment_method: method, transaction_id: transactionId })
                 });
                 var d = await r.json();
 
                 if (d.success) {
-                    // Show success
                     document.getElementById("checkout-page").style.display = "none";
                     document.getElementById("checkout-steps").style.display = "none";
                     document.getElementById("order-success").style.display = "block";
                     document.getElementById("success-order-id").textContent = "#" + d.order_id;
                     document.getElementById("success-txn-id").textContent = d.transaction_id;
-
                     var methodNames = { paypal: "PayPal", telebirr: "Telebirr", cbe: "CBE Bank Transfer" };
                     document.getElementById("success-method").textContent = methodNames[method] || method;
+
+                    // Update step 3
+                    document.getElementById("step2").className = "step done";
+                    document.getElementById("step3").className = "step done";
                 } else {
                     showToast(d.message || "Payment failed.", "error");
-                    // Re-enable buttons
-                    document.querySelectorAll(".payment-details .place-order-btn").forEach(function(b) {
-                        b.disabled = false;
-                    });
+                    document.querySelectorAll(".payment-details .place-order-btn").forEach(function(b) { b.disabled = false; });
                 }
             } catch(err) {
                 showToast("Error processing payment.", "error");
-                document.querySelectorAll(".payment-details .place-order-btn").forEach(function(b) {
-                    b.disabled = false;
-                });
+                document.querySelectorAll(".payment-details .place-order-btn").forEach(function(b) { b.disabled = false; });
             }
         };
 
-        // ===== BACK TO SHIPPING =====
         window.backToShipping = function() {
             document.getElementById("shipping-section").style.display = "block";
             document.getElementById("payment-section").style.display = "none";
@@ -439,7 +382,6 @@
             document.getElementById("step2").className = "step";
         };
 
-        // ===== TOAST =====
         function showToast(msg, type) {
             var tc = document.getElementById("fixed-toast-box");
             var t = document.createElement("div");
@@ -448,7 +390,7 @@
             t.onclick = function(){t.style.opacity="0";setTimeout(function(){t.remove();},400);};
             tc.appendChild(t);
             setTimeout(function(){t.style.opacity="1";t.style.transform="translateX(0)";},100);
-            setTimeout(function(){t.style.opacity="0";setTimeout(function(){if(t.parentElement)t.remove();},400);},5000);
+            setTimeout(function(){t.style.opacity="0";t.style.transform="translateX(100%)";setTimeout(function(){if(t.parentElement)t.remove();},400);},5000);
         }
     })();
     </script>

@@ -40,13 +40,30 @@
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .no-data { text-align: center; color: #aaa; padding: 40px; }
         .loading { text-align: center; color: #f3971b; padding: 40px; }
-        .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; }
+        .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 500; }
         .status-pending { background: rgba(255,193,7,0.15); color: #ffc107; }
         .status-processing { background: rgba(33,150,243,0.15); color: #2196f3; }
         .status-shipped { background: rgba(156,39,176,0.15); color: #9c27b0; }
         .status-completed { background: rgba(76,175,80,0.15); color: #4caf50; }
         .status-cancelled { background: rgba(244,67,54,0.15); color: #f44336; }
-        .book-img-placeholder { width: 50px; height: 60px; background: #16213e; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #f3971b; font-size: 0.6rem; }
+        .book-img-placeholder { width: 50px; height: 60px; background: #16213e; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: #f3971b; font-size: 0.6rem; text-align: center; padding: 3px; }
+
+        /* ---- Fix #5: Notifications Dropdown ---- */
+        .admin-notifications { position: relative; cursor: pointer; }
+        .notification-dropdown {
+            position: absolute; top: 140%; right: 0; width: 320px;
+            background: #1a1a2e; border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+            border: 1px solid #333; display: none; z-index: 9999;
+        }
+        .notification-dropdown.active { display: block; }
+        .notif-header { padding: 15px 20px; border-bottom: 1px solid #333; color: #f3971b; font-weight: 600; font-size: 0.95rem; }
+        .notif-item { padding: 12px 20px; border-bottom: 1px solid #2a2a3e; cursor: pointer; transition: 0.2s; }
+        .notif-item:hover { background: rgba(243,151,27,0.08); }
+        .notif-item:last-child { border-bottom: none; }
+        .notif-item p { color: #ccc; font-size: 0.85rem; margin-bottom: 3px; }
+        .notif-item span { color: #888; font-size: 0.75rem; }
+        .notif-empty { padding: 20px; text-align: center; color: #888; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -55,7 +72,17 @@
             <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
             <div class="logo"><i class="fas fa-book-reader"></i><span>TechBooks Admin</span></div>
             <div class="admin-nav-right">
-                <div class="admin-notifications"><i class="fas fa-bell"></i><span class="notification-badge" id="notif-badge">0</span></div>
+                <!-- Fix #5: Clickable Notifications -->
+                <div class="admin-notifications" id="notif-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notif-badge">0</span>
+                    <div class="notification-dropdown" id="notif-dropdown">
+                        <div class="notif-header"><i class="fas fa-bell"></i> Notifications</div>
+                        <div id="notif-content">
+                            <div class="notif-empty">Loading...</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="admin-profile">
                     <span id="admin-name">Admin</span>
                     <div class="profile-dropdown">
@@ -80,6 +107,7 @@
         </aside>
 
         <main class="admin-main">
+            <!-- DASHBOARD -->
             <div class="admin-section active" id="section-dashboard">
                 <div class="welcome-section"><h1 id="welcome-msg">Welcome Back!</h1><p>Here's what's happening with your store today.</p></div>
                 <div class="dashboard-stats">
@@ -95,46 +123,80 @@
                 <div class="recent-orders">
                     <div class="table-header"><h2>Recent Orders</h2></div>
                     <div class="table-container">
-                        <table class="admin-table"><thead><tr><th>Order ID</th><th>Customer</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
-                        <tbody id="recent-orders-body"><tr><td colspan="5" class="loading">Loading...</td></tr></tbody></table>
+                        <table class="admin-table">
+                            <thead><tr><th>Order ID</th><th>Customer</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+                            <tbody id="recent-orders-body"><tr><td colspan="5" class="loading">Loading...</td></tr></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
+            <!-- ORDERS — Fix #2: Transaction ID Column -->
             <div class="admin-section" id="section-orders">
                 <h1>Manage Orders</h1>
                 <div class="admin-toolbar">
-                    <select class="status-select" id="order-status-filter"><option value="">All Statuses</option><option value="pending">Pending</option><option value="processing">Processing</option><option value="shipped">Shipped</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select>
+                    <select class="status-select" id="order-status-filter">
+                        <option value="">All Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="processing">Processing</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
                 </div>
-                <table class="admin-table"><thead><tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
-                <tbody id="orders-table-body"><tr><td colspan="7" class="loading">Loading...</td></tr></tbody></table>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Payment</th>
+                            <th>Transaction ID</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-table-body"><tr><td colspan="9" class="loading">Loading...</td></tr></tbody>
+                </table>
             </div>
 
+            <!-- USERS -->
             <div class="admin-section" id="section-users">
                 <h1>Manage Users</h1>
                 <div class="admin-toolbar"><input type="text" class="admin-search" id="user-search" placeholder="Search users..." /></div>
-                <table class="admin-table"><thead><tr><th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>Orders</th><th>Total Spent</th><th>Joined</th><th>Actions</th></tr></thead>
-                <tbody id="users-table-body"><tr><td colspan="8" class="loading">Loading...</td></tr></tbody></table>
+                <table class="admin-table">
+                    <thead><tr><th>ID</th><th>Username</th><th>Email</th><th>Role</th><th>Orders</th><th>Total Spent</th><th>Joined</th><th>Actions</th></tr></thead>
+                    <tbody id="users-table-body"><tr><td colspan="8" class="loading">Loading...</td></tr></tbody>
+                </table>
             </div>
 
+            <!-- BOOKS -->
             <div class="admin-section" id="section-books">
                 <h1>Manage Books</h1>
                 <div class="admin-toolbar">
                     <input type="text" class="admin-search" id="book-search" placeholder="Search books..." />
                     <button class="btn btn-primary" id="add-book-btn"><i class="fas fa-plus"></i> Add Book</button>
                 </div>
-                <table class="admin-table"><thead><tr><th>Image</th><th>Title</th><th>Author</th><th>Category</th><th>Price</th><th>Rating</th><th>Stock</th><th>Actions</th></tr></thead>
-                <tbody id="books-table-body"><tr><td colspan="8" class="loading">Loading...</td></tr></tbody></table>
+                <table class="admin-table">
+                    <thead><tr><th>Image</th><th>Title</th><th>Author</th><th>Category</th><th>Price</th><th>Rating</th><th>Stock</th><th>Actions</th></tr></thead>
+                    <tbody id="books-table-body"><tr><td colspan="8" class="loading">Loading...</td></tr></tbody>
+                </table>
             </div>
 
+            <!-- MESSAGES -->
             <div class="admin-section" id="section-messages">
                 <h1>Contact Messages</h1>
-                <table class="admin-table"><thead><tr><th>Name</th><th>Email</th><th>Subject</th><th>Preview</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
-                <tbody id="messages-table-body"><tr><td colspan="7" class="loading">Loading...</td></tr></tbody></table>
+                <table class="admin-table">
+                    <thead><tr><th>Name</th><th>Email</th><th>Subject</th><th>Preview</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody id="messages-table-body"><tr><td colspan="7" class="loading">Loading...</td></tr></tbody>
+                </table>
             </div>
         </main>
     </div>
 
+    <!-- Book Modal -->
     <div class="admin-modal" id="book-modal">
         <div class="modal-box">
             <h2 id="modal-title">Add New Book</h2>
@@ -151,6 +213,7 @@
         </div>
     </div>
 
+    <!-- Order/Message Detail Modal -->
     <div class="admin-modal" id="order-modal">
         <div class="modal-box">
             <h2 id="detail-modal-title">Details</h2>
@@ -159,7 +222,6 @@
         </div>
     </div>
 
-    <!-- ALL JS INLINE — No caching issues -->
     <script>
     (function() {
         "use strict";
@@ -170,11 +232,11 @@
         var salesChart = null;
         var categoriesChart = null;
 
-        // ===== INIT =====
         document.addEventListener("DOMContentLoaded", function() {
             checkAuth();
             setupNav();
             setupOneTimeListeners();
+            setupNotifications();
             loadDashboard();
         });
 
@@ -243,6 +305,81 @@
             if (bf) bf.addEventListener("submit", handleBookSubmit);
         }
 
+        // ===== FIX #5: NOTIFICATIONS =====
+        function setupNotifications() {
+            var btn = document.getElementById("notif-btn");
+            var dropdown = document.getElementById("notif-dropdown");
+
+            if (btn) {
+                btn.addEventListener("click", function(e) {
+                    e.stopPropagation();
+                    dropdown.classList.toggle("active");
+                    if (dropdown.classList.contains("active")) {
+                        loadNotifications();
+                    }
+                });
+            }
+
+            document.addEventListener("click", function(e) {
+                if (!e.target.closest("#notif-btn")) {
+                    if (dropdown) dropdown.classList.remove("active");
+                }
+            });
+        }
+
+        async function loadNotifications() {
+            var content = document.getElementById("notif-content");
+            content.innerHTML = '<div class="notif-empty">Loading...</div>';
+
+            try {
+                var r1 = await fetch("../php/admin/manage_orders.php?status=pending");
+                var d1 = await r1.json();
+
+                var r2 = await fetch("../php/admin/get_messages.php");
+                var d2 = await r2.json();
+
+                var html = "";
+
+                if (d1.success && d1.data.length > 0) {
+                    d1.data.slice(0, 3).forEach(function(o) {
+                        html += '<div class="notif-item" onclick="switchSection(\'orders\')">' +
+                            '<p><i class="fas fa-shopping-cart" style="color:#f3971b;margin-right:8px"></i>New order #' + o.id + ' from ' + o.username + '</p>' +
+                            '<span>' + new Date(o.created_at).toLocaleDateString() + '</span>' +
+                        '</div>';
+                    });
+                }
+
+                if (d2.success && d2.data.length > 0) {
+                    d2.data.filter(function(m) { return !m.is_read; }).slice(0, 3).forEach(function(m) {
+                        html += '<div class="notif-item" onclick="switchSection(\'messages\')">' +
+                            '<p><i class="fas fa-envelope" style="color:#f3971b;margin-right:8px"></i>New message from ' + m.name + '</p>' +
+                            '<span>' + new Date(m.created_at).toLocaleDateString() + '</span>' +
+                        '</div>';
+                    });
+                }
+
+                if (html === "") {
+                    html = '<div class="notif-empty">No new notifications</div>';
+                }
+
+                content.innerHTML = html;
+
+            } catch(e) {
+                content.innerHTML = '<div class="notif-empty">Error loading notifications</div>';
+            }
+        }
+
+        window.switchSection = function(section) {
+            document.querySelectorAll(".admin-menu li").forEach(function(li) { li.classList.remove("active"); });
+            document.querySelectorAll(".admin-section").forEach(function(s) { s.classList.remove("active"); });
+            document.getElementById("section-" + section).classList.add("active");
+            var menuItem = document.querySelector('[data-section="' + section + '"]');
+            if (menuItem) menuItem.parentElement.classList.add("active");
+            if (section === "orders") loadOrders();
+            else if (section === "messages") loadMessages();
+            document.getElementById("notif-dropdown").classList.remove("active");
+        };
+
         // ===== DASHBOARD =====
         async function loadDashboard() {
             try {
@@ -277,19 +414,37 @@
             } catch(e) { toast("Error loading dashboard", "error"); }
         }
 
-        // ===== ORDERS =====
+        // ===== ORDERS — Fix #2: Transaction ID =====
         async function loadOrders(status) {
             status = status || "";
             var tb = document.getElementById("orders-table-body");
-            tb.innerHTML = '<tr><td colspan="7" class="loading">Loading...</td></tr>';
+            tb.innerHTML = '<tr><td colspan="9" class="loading">Loading...</td></tr>';
             try {
                 var r = await fetch("../php/admin/manage_orders.php?status=" + status);
                 var d = await r.json();
-                if (!d.success || d.data.length === 0) { tb.innerHTML = '<tr><td colspan="7" class="no-data">No orders found</td></tr>'; return; }
+                if (!d.success || d.data.length === 0) { tb.innerHTML = '<tr><td colspan="9" class="no-data">No orders found</td></tr>'; return; }
                 tb.innerHTML = d.data.map(function(o) {
-                    return '<tr><td>#'+o.id+'</td><td>'+o.username+'<br><small style="color:#888">'+o.shipping_email+'</small></td><td>'+(o.items?o.items.length:0)+' items</td><td>$'+parseFloat(o.total_amount).toFixed(2)+'</td><td><select class="status-select" onchange="window._updateOrder('+o.id+',this.value)"><option value="pending"'+(o.status==="pending"?" selected":"")+'>Pending</option><option value="processing"'+(o.status==="processing"?" selected":"")+'>Processing</option><option value="shipped"'+(o.status==="shipped"?" selected":"")+'>Shipped</option><option value="completed"'+(o.status==="completed"?" selected":"")+'>Completed</option><option value="cancelled"'+(o.status==="cancelled"?" selected":"")+'>Cancelled</option></select></td><td>'+new Date(o.created_at).toLocaleDateString()+'</td><td><button class="btn btn-sm btn-primary" onclick="window._viewOrder('+o.id+')"><i class="fas fa-eye"></i></button></td></tr>';
+                    var txnId = o.transaction_id ? '<small style="color:#4caf50">' + o.transaction_id + '</small>' : '<small style="color:#888">Pending</small>';
+                    var payMethod = o.payment_method && o.payment_method !== 'pending' ? '<span class="status-badge status-processing">' + o.payment_method.toUpperCase() + '</span>' : '<small style="color:#888">-</small>';
+                    return '<tr>' +
+                        '<td>#'+o.id+'</td>' +
+                        '<td>'+o.username+'<br><small style="color:#888">'+o.shipping_email+'</small></td>' +
+                        '<td>'+(o.items?o.items.length:0)+' items</td>' +
+                        '<td>$'+parseFloat(o.total_amount).toFixed(2)+'</td>' +
+                        '<td>'+payMethod+'</td>' +
+                        '<td>'+txnId+'</td>' +
+                        '<td><select class="status-select" onchange="window._updateOrder('+o.id+',this.value)">'+
+                            '<option value="pending"'+(o.status==="pending"?" selected":"")+'>Pending</option>'+
+                            '<option value="processing"'+(o.status==="processing"?" selected":"")+'>Processing</option>'+
+                            '<option value="shipped"'+(o.status==="shipped"?" selected":"")+'>Shipped</option>'+
+                            '<option value="completed"'+(o.status==="completed"?" selected":"")+'>Completed</option>'+
+                            '<option value="cancelled"'+(o.status==="cancelled"?" selected":"")+'>Cancelled</option>'+
+                        '</select></td>' +
+                        '<td>'+new Date(o.created_at).toLocaleDateString()+'</td>' +
+                        '<td><button class="btn btn-sm btn-primary" onclick="window._viewOrder('+o.id+')"><i class="fas fa-eye"></i></button></td>' +
+                    '</tr>';
                 }).join("");
-            } catch(e) { tb.innerHTML = '<tr><td colspan="7" class="no-data">Error loading orders</td></tr>'; }
+            } catch(e) { tb.innerHTML = '<tr><td colspan="9" class="no-data">Error loading orders</td></tr>'; }
         }
 
         window._updateOrder = async function(id, status) {
@@ -309,7 +464,20 @@
                 if (!order) return;
                 var items = "";
                 if (order.items) { for(var j=0;j<order.items.length;j++){var it=order.items[j]; items+='<div style="display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #333"><div><p style="margin:0">'+it.title+'</p><small>Qty: '+it.quantity+' x $'+parseFloat(it.price).toFixed(2)+'</small></div></div>';} }
-                document.getElementById("order-detail-content").innerHTML = '<div style="color:#ccc"><p><strong>Order:</strong> #'+order.id+'</p><p><strong>Customer:</strong> '+order.username+' ('+order.shipping_email+')</p><p><strong>Phone:</strong> '+order.shipping_phone+'</p><p><strong>Address:</strong> '+order.shipping_address+', '+order.shipping_city+' '+order.shipping_zip+'</p><p><strong>Status:</strong> <span class="status-badge status-'+order.status+'">'+order.status+'</span></p><hr style="border-color:#333;margin:15px 0"><h3 style="color:#f3971b">Items:</h3>'+items+'<hr style="border-color:#333;margin:15px 0"><p style="font-size:1.2rem;color:#f3971b"><strong>Total: $'+parseFloat(order.total_amount).toFixed(2)+'</strong></p></div>';
+                document.getElementById("order-detail-content").innerHTML =
+                    '<div style="color:#ccc">' +
+                    '<p><strong>Order:</strong> #'+order.id+'</p>' +
+                    '<p><strong>Customer:</strong> '+order.username+' ('+order.shipping_email+')</p>' +
+                    '<p><strong>Phone:</strong> '+order.shipping_phone+'</p>' +
+                    '<p><strong>Address:</strong> '+order.shipping_address+', '+order.shipping_city+' '+order.shipping_zip+'</p>' +
+                    '<p><strong>Payment:</strong> '+(order.payment_method||'Pending')+'</p>' +
+                    '<p><strong>Transaction ID:</strong> '+(order.transaction_id||'Pending verification')+'</p>' +
+                    '<p><strong>Status:</strong> <span class="status-badge status-'+order.status+'">'+order.status+'</span></p>' +
+                    '<hr style="border-color:#333;margin:15px 0">' +
+                    '<h3 style="color:#f3971b">Items:</h3>'+items+
+                    '<hr style="border-color:#333;margin:15px 0">' +
+                    '<p style="font-size:1.2rem;color:#f3971b"><strong>Total: $'+parseFloat(order.total_amount).toFixed(2)+'</strong></p>' +
+                    '</div>';
                 document.getElementById("detail-modal-title").textContent = "Order Details";
                 document.getElementById("order-modal").classList.add("active");
             } catch(e) { toast("Failed to load order", "error"); }
@@ -360,12 +528,12 @@
                 for (var i=0; i<d.data.length; i++) {
                     var b = d.data[i];
                     html += '<tr>' +
-                        '<td><img src="' + b.image + '" alt="" style="width:50px;height:60px;object-fit:cover;border-radius:5px" onerror="this.onerror=null;this.src=\'\';this.alt=\'No img\'"></td>' +
+                        '<td><div class="book-img-placeholder">' + b.title.substring(0,3) + '</div></td>' +
                         '<td>'+b.title+'</td>' +
                         '<td>'+b.author+'</td>' +
                         '<td>'+(b.category_name||"N/A")+'</td>' +
                         '<td>$'+parseFloat(b.price).toFixed(2)+'</td>' +
-                        '<td>'+b.rating+'</td>' +
+                        '<td>'+b.rating+' ⭐</td>' +
                         '<td><span class="status-badge status-'+(b.in_stock?"completed":"cancelled")+'">'+(b.in_stock?"Yes":"No")+'</span></td>' +
                         '<td>' +
                             '<button class="btn btn-sm btn-primary" onclick="window._editBook('+b.id+')"><i class="fas fa-edit"></i></button> ' +
@@ -473,37 +641,26 @@
                 '<div><label style="color:#888;font-size:0.8rem;display:block;margin-bottom:8px">Message</label><div style="background:#16213e;padding:20px;border-radius:10px;line-height:1.7;white-space:pre-wrap;word-wrap:break-word;max-height:400px;overflow-y:auto">'+msg.message+'</div></div>'+
                 '<hr style="border-color:#333;margin:15px 0">'+
                 '<div style="display:flex;gap:10px;flex-wrap:wrap">'+
-                '<button class="btn btn-primary" onclick="window.open(\'mailto:'+msg.email+'\')"><i class="fas fa-reply"></i> Reply</button>'+
+                '<button class="btn btn-primary" onclick="window._replyMsg(\''+msg.email+'\')"><i class="fas fa-reply"></i> Reply</button>'+
                 (msg.is_read?'':'<button class="btn btn-success" onclick="window._markRead('+msg.id+')"><i class="fas fa-check"></i> Mark Read</button>')+
                 '</div></div>';
             document.getElementById("detail-modal-title").textContent = "Message Details";
             document.getElementById("order-modal").classList.add("active");
         };
 
-        window._viewMsg = function(id) {
-    var msg = null;
-    for(var i=0;i<allMessages.length;i++){if(allMessages[i].id==id){msg=allMessages[i];break;}}
-    if(!msg){toast("Not found","error");return;}
-    document.getElementById("order-detail-content").innerHTML =
-        '<div style="color:#ccc">'+
-        '<div style="display:flex;justify-content:space-between;margin-bottom:20px"><span style="color:#888">'+new Date(msg.created_at).toLocaleString()+'</span><span class="status-badge '+(msg.is_read?'status-completed':'status-pending')+'">'+(msg.is_read?'Read':'Unread')+'</span></div>'+
-        '<div style="margin-bottom:15px"><label style="color:#888;font-size:0.8rem;display:block">From</label><p style="font-size:1.1rem;margin:0"><strong>'+msg.name+'</strong></p><p style="color:#f3971b;margin:0">'+msg.email+'</p></div>'+
-        '<div style="margin-bottom:15px"><label style="color:#888;font-size:0.8rem;display:block">Subject</label><p style="margin:0"><strong>'+msg.subject+'</strong></p></div>'+
-        '<hr style="border-color:#333;margin:15px 0">'+
-        '<div><label style="color:#888;font-size:0.8rem;display:block;margin-bottom:8px">Message</label><div style="background:#16213e;padding:20px;border-radius:10px;line-height:1.7;white-space:pre-wrap;word-wrap:break-word;max-height:400px;overflow-y:auto">'+msg.message+'</div></div>'+
-        '<hr style="border-color:#333;margin:15px 0">'+
-        '<div style="display:flex;gap:10px;flex-wrap:wrap">'+
-        '<button class="btn btn-primary" onclick="window._replyMsg(\''+msg.email+'\')"><i class="fas fa-reply"></i> Reply</button>'+
-        (msg.is_read?'':'<button class="btn btn-success" onclick="window._markRead('+msg.id+')"><i class="fas fa-check"></i> Mark Read</button>')+
-        '</div></div>';
-    document.getElementById("detail-modal-title").textContent = "Message Details";
-    document.getElementById("order-modal").classList.add("active");
-};
+        window._replyMsg = function(email) {
+            var gmailUrl = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(email);
+            window.open(gmailUrl, "_blank");
+        };
 
-window._replyMsg = function(email) {
-    var gmailUrl = "https://mail.google.com/mail/?view=cm&fs=1&to=" + encodeURIComponent(email);
-    window.open(gmailUrl, "_blank");
-};
+        window._markRead = async function(id) {
+            try {
+                var r = await fetch("../php/admin/mark_message_read.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message_id:id})});
+                var d = await r.json();
+                if(d.success){toast("Marked as read","success");document.getElementById("order-modal").classList.remove("active");loadMessages();loadDashboard();}
+                else toast(d.message||"Failed","error");
+            } catch(e) { toast("Error","error"); }
+        };
 
         // ===== UTILS =====
         function debounce(fn, wait) {
@@ -522,10 +679,7 @@ window._replyMsg = function(email) {
             setTimeout(function(){t.style.opacity="1";t.style.transform="translateX(0)";},100);
             setTimeout(function(){t.style.opacity="0";t.style.transform="translateX(100%)";setTimeout(function(){if(t.parentElement)t.remove();},300);},3000);
         }
-
     })();
-
-
     </script>
 </body>
 </html>

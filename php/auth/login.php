@@ -1,7 +1,4 @@
 <?php
-// =============================================
-// LOGIN HANDLER
-// =============================================
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -23,14 +20,14 @@ if (empty($username) && empty($password)) {
 $errors = array();
 
 if (empty($username)) {
-    $errors[] = "Username is required.";
+    $errors[] = "Please fill in all fields.";
 }
 if (empty($password)) {
-    $errors[] = "Password is required.";
+    $errors[] = "Please fill in all fields.";
 }
 
 if (!empty($errors)) {
-    $_SESSION['error'] = implode("<br>", $errors);
+    $_SESSION['error'] = "Please fill in all fields.";
     header("Location: ../../docs/login.html");
     exit();
 }
@@ -40,27 +37,23 @@ try {
     $stmt->execute([$username]);
     $user = $stmt->fetch();
 
-    // Check if user exists and password correct
     if (!$user || !password_verify($password, $user['password'])) {
-        $_SESSION['error'] = "Invalid username or password.";
+        $_SESSION['error'] = "Invalid entry. Please check your credentials and try again.";
         header("Location: ../../docs/login.html");
         exit();
     }
 
-    // Check if email is verified
     if (!$user['is_verified']) {
         $_SESSION['error'] = "Please verify your email first. Check your inbox for the verification link.";
         header("Location: ../../docs/login.html");
         exit();
     }
 
-    // Set session
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['username'] = $user['username'];
     $_SESSION['email'] = $user['email'];
     $_SESSION['role'] = $user['role'];
 
-    // Redirect based on role
     if ($user['role'] === 'admin') {
         $_SESSION['success'] = "Welcome back, Admin!";
         header("Location: ../../docs/admin.html");
@@ -71,6 +64,8 @@ try {
     exit();
 
 } catch (PDOException $e) {
-    die("DATABASE ERROR: " . $e->getMessage());
+    $_SESSION['error'] = "Something went wrong. Please try again.";
+    header("Location: ../../docs/login.html");
+    exit();
 }
 ?>
